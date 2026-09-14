@@ -23,7 +23,13 @@ from app.models.course_module import CourseModule
 from app.models.course_content import CourseContent
 from app.models.enrollment import Enrollment
 from app.models.activity import Activity
-from app.models.store_product import StoreProduct
+
+# ❌ WRONG (remove)
+# from app.models.store_product import StoreProduct
+
+# ✅ CORRECT
+from app.models.products import Product
+
 from app.models.cart_item import CartItem
 from app.models.receipt import Receipt
 from app.models.document import Document
@@ -105,9 +111,6 @@ async def startup_event():
     logging.config.dictConfig(LOGGING_CONFIG)
     init_db()
 
-    # ⭐ IMPORTANT:
-    # Removed run_initial_load(db) — this was wiping cart_item rows.
-    # Removed any destructive reseeding logic.
     db = SessionLocal()
     seed_store_products(db)
     db.close()

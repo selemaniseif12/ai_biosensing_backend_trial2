@@ -1,9 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+
 from app.database import get_db
 from app.models.cart_item import CartItem
 
 router = APIRouter(prefix="/checkout", tags=["Checkout"])
+
 
 @router.post("")
 def process_checkout(user_id: int, db: Session = Depends(get_db)):
@@ -12,6 +14,7 @@ def process_checkout(user_id: int, db: Session = Depends(get_db)):
     if not cart_items:
         raise HTTPException(status_code=404, detail="Cart is empty")
 
+    # Calculate total cost
     total = sum(item.price_usd * item.quantity for item in cart_items)
     payment_status = "success"
 
@@ -26,9 +29,10 @@ def process_checkout(user_id: int, db: Session = Depends(get_db)):
         for item in cart_items
     ]
 
-    # ⭐ FIX: Do NOT delete cart items
-    # This prevents the cart table from being wiped
-    # and avoids 500 errors on subsequent checkout calls.
+    # ⭐ IMPORTANT:
+    # Do NOT delete cart items here.
+    # This prevents accidental wiping of the cart table
+    # and avoids 500 errors on repeated checkout calls.
 
     return {
         "message": "Payment processed successfully",

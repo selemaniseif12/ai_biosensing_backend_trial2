@@ -4,7 +4,9 @@ from pydantic import BaseModel
 
 from app.database import get_db
 from app.models.cart_item import CartItem
-from app.models.store_product import StoreProduct
+
+# ✅ Correct model import
+from app.models.products import Product
 
 router = APIRouter(prefix="/store/cart", tags=["Cart"])
 
@@ -25,12 +27,12 @@ def get_cart(user_id: int, db: Session = Depends(get_db)):
 # ---------------------------
 @router.post("/add")
 def add_to_cart(user_id: int, payload: CartAddRequest, db: Session = Depends(get_db)):
-    product = db.query(StoreProduct).filter(StoreProduct.item_id == payload.item_id).first()
+    product = db.query(Product).filter(Product.item_id == payload.item_id).first()
 
     if not product:
         raise HTTPException(status_code=404, detail="Store item not found")
 
-    # ⭐ FIX: If item already exists, increase quantity instead of inserting duplicate
+    # ⭐ If item already exists, increase quantity instead of inserting duplicate
     existing = db.query(CartItem).filter(
         CartItem.user_id == user_id,
         CartItem.item_id == payload.item_id

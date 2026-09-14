@@ -1,7 +1,7 @@
 # app/seed/store_seed.py
 
 from sqlalchemy.orm import Session
-from app.models.store_product import StoreProduct
+from app.models.products import Product   # ✅ Correct import
 
 # Combined product list (your original + new verified items)
 PRODUCTS = [
@@ -99,11 +99,11 @@ PRODUCTS = [
 def seed_store_products(db: Session):
     for p in PRODUCTS:
         # Avoid duplicates
-        exists = db.query(StoreProduct).filter(StoreProduct.item_id == p["item_id"]).first()
+        exists = db.query(Product).filter(Product.item_id == p["item_id"]).first()
         if exists:
             continue
 
-        product = StoreProduct(
+        product = Product(
             item_id=p["item_id"],
             name=p["name"],
             type=p["type"],
