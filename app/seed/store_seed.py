@@ -1,9 +1,8 @@
 # app/seed/store_seed.py
 
 from sqlalchemy.orm import Session
-from app.models.products import Product   # ✅ Correct import
+from app.models.products import Product   # Correct import
 
-# Combined product list (your original + new verified items)
 PRODUCTS = [
     {
         "item_id": "consulting_fixed",
@@ -11,6 +10,8 @@ PRODUCTS = [
         "type": "service",
         "price_usd": 199.00,
         "billing_period": "one_time",
+        "active": True,
+        "coming_soon": False,
         "description": "One-hour consulting session for biosensing or ML guidance",
     },
     {
@@ -19,6 +20,8 @@ PRODUCTS = [
         "type": "service",
         "price_usd": 499.00,
         "billing_period": "one_time",
+        "active": True,
+        "coming_soon": False,
         "description": "Custom project consulting for labs, research teams, or startups",
     },
     {
@@ -27,6 +30,8 @@ PRODUCTS = [
         "type": "course",
         "price_usd": 59.00,
         "billing_period": "3_months",
+        "active": False,
+        "coming_soon": True,
         "description": "Foundational course on QCM sensors, noise, and biosensing basics",
     },
     {
@@ -35,6 +40,8 @@ PRODUCTS = [
         "type": "course",
         "price_usd": 79.00,
         "billing_period": "3_months",
+        "active": False,
+        "coming_soon": True,
         "description": "Training on XGBoost V2 model, noise tables, and lab workflow",
     },
     {
@@ -43,6 +50,8 @@ PRODUCTS = [
         "type": "course",
         "price_usd": 99.00,
         "billing_period": "3_months",
+        "active": False,
+        "coming_soon": True,
         "description": "Advanced RandomForest V6 training with 120k dataset",
     },
     {
@@ -51,6 +60,8 @@ PRODUCTS = [
         "type": "course",
         "price_usd": 799.00,
         "billing_period": "3_months",
+        "active": True,
+        "coming_soon": False,
         "description": "End-to-end API engineering, backend, routers, models, and dashboards",
     },
     {
@@ -59,6 +70,8 @@ PRODUCTS = [
         "type": "digital",
         "price_usd": 49.00,
         "billing_period": "3_months",
+        "active": True,
+        "coming_soon": False,
         "description": "Access to Analyzer V2 model, logs, noise tables, and predictions",
     },
     {
@@ -67,6 +80,8 @@ PRODUCTS = [
         "type": "digital",
         "price_usd": 69.00,
         "billing_period": "3_months",
+        "active": True,
+        "coming_soon": False,
         "description": "Access to Analyzer V6 model, logs, noise tables, and predictions",
     },
     {
@@ -75,6 +90,8 @@ PRODUCTS = [
         "type": "digital",
         "price_usd": 99.00,
         "billing_period": "3_months",
+        "active": True,
+        "coming_soon": False,
         "description": "Combined access to both ML models with comparison dashboard",
     },
     {
@@ -83,6 +100,8 @@ PRODUCTS = [
         "type": "digital",
         "price_usd": 29.00,
         "billing_period": "3_months",
+        "active": True,
+        "coming_soon": False,
         "description": "Access to 100-virus database with mass, metadata, and probabilities",
     },
     {
@@ -91,6 +110,8 @@ PRODUCTS = [
         "type": "physical",
         "price_usd": 299.00,
         "billing_period": "one_time",
+        "active": True,
+        "coming_soon": False,
         "description": "Educational QCM device for practical biosensing experiments",
     },
 ]
@@ -98,7 +119,6 @@ PRODUCTS = [
 
 def seed_store_products(db: Session):
     for p in PRODUCTS:
-        # Avoid duplicates
         exists = db.query(Product).filter(Product.item_id == p["item_id"]).first()
         if exists:
             continue
@@ -109,6 +129,8 @@ def seed_store_products(db: Session):
             type=p["type"],
             price_usd=p["price_usd"],
             billing_period=p["billing_period"],
+            active=p["active"],
+            coming_soon=p["coming_soon"],
             description=p["description"],
         )
 
