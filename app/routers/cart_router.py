@@ -4,9 +4,11 @@ from pydantic import BaseModel
 
 from app.database import get_db
 from app.models.cart_item import CartItem
+
+# Correct model import
 from app.models.products import Product
 
-# ⭐ FIXED PREFIX — restores frontend compatibility
+# ⭐ FIXED PREFIX — this restores frontend compatibility
 router = APIRouter(prefix="/cart", tags=["Cart"])
 
 class CartAddRequest(BaseModel):
@@ -31,6 +33,7 @@ def add_to_cart(user_id: int, payload: CartAddRequest, db: Session = Depends(get
     if not product:
         raise HTTPException(status_code=404, detail="Store item not found")
 
+    # If item already exists, increase quantity instead of inserting duplicate
     existing = db.query(CartItem).filter(
         CartItem.user_id == user_id,
         CartItem.item_id == payload.item_id
@@ -50,6 +53,7 @@ def add_to_cart(user_id: int, payload: CartAddRequest, db: Session = Depends(get
             }
         }
 
+    # Create new cart item
     cart_item = CartItem(
         user_id=user_id,
         item_id=product.item_id,
@@ -93,7 +97,7 @@ def delete_cart_item(user_id: int, item_id: str, db: Session = Depends(get_db)):
 
 
 # ---------------------------
-# ALIAS ROUTES (Frontend compatibility)
+# ALIAS ROUTES
 # ---------------------------
 alias_router = APIRouter(tags=["Cart Alias"])
 
