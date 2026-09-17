@@ -1,12 +1,38 @@
 import os
-from dotenv import load_dotenv
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+import importlib
+
+try:
+    sqlalchemy = importlib.import_module("sqlalchemy")
+    sqlalchemy_orm = importlib.import_module("sqlalchemy.orm")
+except ModuleNotFoundError as exc:
+    if exc.name and exc.name.startswith("sqlalchemy"):
+        raise RuntimeError(
+            "SQLAlchemy is required. Install it with: pip install sqlalchemy"
+        ) from exc
+    raise
+
+create_engine = sqlalchemy.create_engine
+sessionmaker = sqlalchemy_orm.sessionmaker
+declarative_base = sqlalchemy_orm.declarative_base
 
 # ---------------------------------------------------------
 # Load environment variables
 # ---------------------------------------------------------
-load_dotenv()
+def load_env_file(path=".env"):
+    """Load simple KEY=VALUE entries without requiring python-dotenv."""
+    if not os.path.isfile(path):
+        return
+
+    with open(path, encoding="utf-8") as env_file:
+        for line in env_file:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, value = line.split("=", 1)
+            os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
+
+
+load_env_file()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -56,12 +82,12 @@ def init_db():
     DO NOT create or modify tables in production.
     """
 
-    from app.models.token_model import TokenModel
-    from app.models.consulting_model import ConsultingRequestModel
-    from app.models.service_model import Service
-    from app.models.receipt import Receipt
-    from app.models.cart_item import CartItem
-    from app.models.products import Product   # ⭐ FIXED MODEL NAME
+    from .models.token_model import TokenModel
+    from .models.consulting_model import ConsultingRequestModel
+    from .models.service_model import Service
+    from .models.receipt import Receipt
+    from .models.cart_item import CartItem
+    from .models.products import Product   # ⭐ FIXED MODEL NAME
 
     # No Base.metadata.create_all()
     # No Base.metadata.drop_all()
@@ -72,8 +98,8 @@ def init_db():
 # DEVELOPMENT-ONLY: Auto-create tables if missing
 # ---------------------------------------------------------
 try:
-    from app.models.products import Product   # ⭐ FIXED
-    from app.models.cart_item import CartItem
+    from .models.products import Product   # ⭐ FIXED
+    from .models.cart_item import CartItem
 
     Base.metadata.create_all(bind=engine)
 except Exception as e:
