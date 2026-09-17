@@ -4,13 +4,16 @@ from pydantic import BaseModel
 
 from app.database import get_db
 from app.models.cart_item import CartItem
-
-# Correct model import
 from app.models.products import Product
 
-# ⭐ FIXED PREFIX — this restores frontend compatibility
+
+# ⭐ MAIN CART ROUTER — this is the ONLY router your frontend should use
 router = APIRouter(prefix="/cart", tags=["Cart"])
 
+
+# ---------------------------
+# REQUEST MODEL
+# ---------------------------
 class CartAddRequest(BaseModel):
     item_id: str
 
@@ -33,7 +36,7 @@ def add_to_cart(user_id: int, payload: CartAddRequest, db: Session = Depends(get
     if not product:
         raise HTTPException(status_code=404, detail="Store item not found")
 
-    # If item already exists, increase quantity instead of inserting duplicate
+    # If item already exists, increase quantity
     existing = db.query(CartItem).filter(
         CartItem.user_id == user_id,
         CartItem.item_id == payload.item_id
@@ -94,21 +97,3 @@ def delete_cart_item(user_id: int, item_id: str, db: Session = Depends(get_db)):
     db.commit()
 
     return {"message": "Item deleted"}
-
-
-# ---------------------------
-# ALIAS ROUTES
-# ---------------------------
-alias_router = APIRouter(tags=["Cart Alias"])
-
-@alias_router.post("/cart/add")
-def alias_add_to_cart(user_id: int, payload: CartAddRequest, db: Session = Depends(get_db)):
-    return add_to_cart(user_id=user_id, payload=payload, db=db)
-
-@alias_router.get("/cart")
-def alias_get_cart(user_id: int, db: Session = Depends(get_db)):
-    return get_cart(user_id=user_id, db=db)
-
-@alias_router.delete("/cart/delete")
-def alias_delete_cart_item(user_id: int, item_id: str, db: Session = Depends(get_db)):
-    return delete_cart_item(user_id=user_id, item_id=item_id, db=db)

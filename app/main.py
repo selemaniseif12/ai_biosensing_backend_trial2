@@ -44,7 +44,8 @@ from app.profile_router import router as profile_router
 
 from app.routers import payments
 from app.routers.stripe_router import router as stripe_router
-from app.routers.cart_router import router as cart_router, alias_router as cart_alias_router
+from app.routers.cart_router import router as cart_router
+
 from app.routers.store_router import router as store_router
 from app.routers.payment_webhook import router as payment_webhook_router
 from app.routers.webhook import router as stripe_webhook_router
@@ -145,7 +146,6 @@ app.include_router(virus_list_router, tags=["Virus List"])
 # ⭐ RESTORED STORE + CART + CHECKOUT ROUTERS
 app.include_router(store_router, tags=["Store"])
 app.include_router(cart_router, tags=["Cart"])
-app.include_router(cart_alias_router, tags=["Cart"])
 app.include_router(checkout_router)
 
 app.include_router(payment_webhook_router)
