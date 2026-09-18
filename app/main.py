@@ -69,6 +69,7 @@ from app.routers.calendar_router import router as calendar_router
 from app.routers.token_admin import router as token_admin_router
 from app.routers.receipts_router import init_receipts
 from app.routers.payments_router import router as payments_router
+from app.routers.document_router import router as document_router
 
 # Virus list router
 from app.routers.virus_list import router as virus_list_router
@@ -155,6 +156,7 @@ app.include_router(consultation_schedule_router)
 app.include_router(notification_router)
 app.include_router(team_workload_router)
 app.include_router(calendar_router)
+app.include_router(document_router, tags=["Documents"])
 
 init_receipts(app)
 app.include_router(payments_router)
