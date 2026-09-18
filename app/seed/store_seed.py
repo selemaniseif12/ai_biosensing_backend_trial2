@@ -118,6 +118,20 @@ PRODUCTS = [
 
 
 def seed_store_products(db: Session):
+    """
+    ⭐ Permanent Fix:
+    Only seed products IF the table is empty.
+    This prevents reseeding on every startup,
+    which was causing cart_item rows to be wiped.
+    """
+
+    # Check if products table already has data
+    count = db.query(Product).count()
+    if count > 0:
+        print("Store products already seeded — skipping.")
+        return
+
+    # Seed only once
     for p in PRODUCTS:
         exists = db.query(Product).filter(Product.item_id == p["item_id"]).first()
         if exists:

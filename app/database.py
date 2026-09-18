@@ -31,7 +31,6 @@ def load_env_file(path=".env"):
             key, value = line.split("=", 1)
             os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
 
-
 load_env_file()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -97,10 +96,16 @@ def init_db():
 # ---------------------------------------------------------
 # DEVELOPMENT-ONLY: Auto-create tables if missing
 # ---------------------------------------------------------
-try:
-    from .models.products import Product   # ⭐ FIXED
-    from .models.cart_item import CartItem
+ENV = os.getenv("ENV", "production").lower()
 
-    Base.metadata.create_all(bind=engine)
-except Exception as e:
-    print("Table creation skipped:", e)
+if ENV == "development":
+    try:
+        from .models.products import Product
+        from .models.cart_item import CartItem
+
+        Base.metadata.create_all(bind=engine)
+        print("Development mode: tables auto-created.")
+    except Exception as e:
+        print("Table creation skipped:", e)
+else:
+    print("Production mode: table auto-creation disabled.")
