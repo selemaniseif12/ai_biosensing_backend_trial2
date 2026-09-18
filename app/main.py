@@ -69,7 +69,12 @@ from app.routers.calendar_router import router as calendar_router
 from app.routers.token_admin import router as token_admin_router
 from app.routers.receipts_router import init_receipts
 from app.routers.payments_router import router as payments_router
-from app.routers.document_router import router as document_router
+
+# ⭐ OLD DOCUMENTATION ROUTER — COMMENTED OUT (local folder system)
+# from app.routers.document_router import router as document_router
+
+# ⭐ NEW DOCUMENTATION ROUTER — ACTIVE (Neon system)
+from app.routers.docs import router as docs_router
 
 # Virus list router
 from app.routers.virus_list import router as virus_list_router
@@ -119,7 +124,7 @@ async def startup_event():
 os.makedirs("static/slides", exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# ⭐ Serve docs_content folder (your PDFs)
+# ⭐ Serve docs_content folder (your old PDFs — still available if needed)
 app.mount("/docs_content", StaticFiles(directory="app/docs_content"), name="docs_content")
 
 # Routers
@@ -156,7 +161,12 @@ app.include_router(consultation_schedule_router)
 app.include_router(notification_router)
 app.include_router(team_workload_router)
 app.include_router(calendar_router)
-app.include_router(document_router, tags=["Documents"])
+
+# ⭐ OLD DOCUMENTATION ROUTER — COMMENTED OUT
+# app.include_router(document_router, tags=["Documents"])
+
+# ⭐ NEW DOCUMENTATION ROUTER — ACTIVE
+app.include_router(docs_router, tags=["Documents"])
 
 init_receipts(app)
 app.include_router(payments_router)
