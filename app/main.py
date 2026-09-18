@@ -7,6 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
+import uvicorn
 
 from app.core.logging_config import LOGGING_CONFIG
 from app.database import Base, engine, SessionLocal, init_db
@@ -24,10 +25,7 @@ from app.models.course_content import CourseContent
 from app.models.enrollment import Enrollment
 from app.models.activity import Activity
 
-# ❌ WRONG (remove)
-# from app.models.store_product import StoreProduct
-
-# ✅ CORRECT
+# Correct product model
 from app.models.products import Product
 
 from app.models.cart_item import CartItem
@@ -38,7 +36,7 @@ from app.models.token_model import TokenModel
 from app.models.service_model import Service
 from app.models.user import User
 
-# Routers (non‑ML)
+# Routers
 from app.routers.home_router import router as home_router
 from app.profile_router import router as profile_router
 
@@ -91,7 +89,7 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# ⭐ CORS Middleware
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -106,7 +104,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ⭐ Startup — CLEANED
+# Startup
 @app.on_event("startup")
 async def startup_event():
     logging.config.dictConfig(LOGGING_CONFIG)
@@ -119,6 +117,9 @@ async def startup_event():
 # Static files
 os.makedirs("static/slides", exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# ⭐ Serve docs_content folder (your PDFs)
+app.mount("/docs_content", StaticFiles(directory="app/docs_content"), name="docs_content")
 
 # Routers
 app.include_router(auth_router, tags=["Auth"])
@@ -143,7 +144,6 @@ app.include_router(students_router, tags=["Students"])
 
 app.include_router(virus_list_router, tags=["Virus List"])
 
-# ⭐ RESTORED STORE + CART + CHECKOUT ROUTERS
 app.include_router(store_router, tags=["Store"])
 app.include_router(cart_router, tags=["Cart"])
 app.include_router(checkout_router)
@@ -209,3 +209,8 @@ def send_email(req: EmailRequest):
 @app.get("/")
 def root():
     return {"message": "AI Biosensing API is running"}
+
+# ⭐ Render‑compatible server start
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
