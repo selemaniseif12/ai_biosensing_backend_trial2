@@ -70,10 +70,7 @@ from app.routers.token_admin import router as token_admin_router
 from app.routers.receipts_router import init_receipts
 from app.routers.payments_router import router as payments_router
 
-# ⭐ OLD DOCUMENTATION ROUTER — COMMENTED OUT (local folder system)
-# from app.routers.document_router import router as document_router
-
-# ⭐ NEW DOCUMENTATION ROUTER — ACTIVE (Neon system)
+# NEW DOCUMENTATION ROUTER
 from app.routers.docs import router as docs_router
 
 # Virus list router
@@ -95,10 +92,11 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS
+# ⭐ UPDATED CORS — FIXED FOR VERCEL FRONTEND
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
+        "https://ai-biosensing-frontend-v2.vercel.app",  # ⭐ REQUIRED
         "https://api.piezo-sensors.com",
         "http://localhost",
         "http://localhost:3000",
@@ -124,7 +122,7 @@ async def startup_event():
 os.makedirs("static/slides", exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# ⭐ Serve docs_content folder (your old PDFs — still available if needed)
+# Serve docs_content folder
 app.mount("/docs_content", StaticFiles(directory="app/docs_content"), name="docs_content")
 
 # Routers
@@ -162,10 +160,6 @@ app.include_router(notification_router)
 app.include_router(team_workload_router)
 app.include_router(calendar_router)
 
-# ⭐ OLD DOCUMENTATION ROUTER — COMMENTED OUT
-# app.include_router(document_router, tags=["Documents"])
-
-# ⭐ NEW DOCUMENTATION ROUTER — ACTIVE
 app.include_router(docs_router, tags=["Documents"])
 
 init_receipts(app)
@@ -222,7 +216,7 @@ def send_email(req: EmailRequest):
 def root():
     return {"message": "AI Biosensing API is running"}
 
-# ⭐ Render‑compatible server start
+# Render‑compatible server start
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)
