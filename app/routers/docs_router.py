@@ -9,7 +9,7 @@ from app.utils.pdf_loader import load_pdf
 
 router = APIRouter(
     prefix="/docs",
-    tags=["Documentation"]
+    tags=["Documents"]   # ⭐ FIXED: unified tag to remove Swagger duplication
 )
 
 # ---------------------------------------------------------
@@ -33,7 +33,7 @@ def list_all_documents(db: Session = Depends(get_db)):
     ]
 
 # ---------------------------------------------------------
-# NEW: Serve raw PDF files by filename
+# Serve raw PDF files by filename
 # ---------------------------------------------------------
 DOCS_FOLDER = "app/docs_content"
 
@@ -50,7 +50,7 @@ def get_pdf_by_filename(filename: str):
     return FileResponse(file_path, media_type="application/pdf")
 
 # ---------------------------------------------------------
-# Existing: Get a specific document by ID (DB lookup)
+# Get a specific document by ID (DB lookup)
 # ---------------------------------------------------------
 @router.get("/{doc_id:path}")
 def get_document_file(doc_id: str, db: Session = Depends(get_db)):

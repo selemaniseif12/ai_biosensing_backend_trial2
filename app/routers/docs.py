@@ -4,11 +4,11 @@ from app.models.document_file import DocumentFile
 
 router = APIRouter(
     prefix="/docs",
-    tags=["Documentation"]
+    tags=["Documents"]   # ⭐ FIXED: unified tag to remove Swagger duplication
 )
 
 # ---------------------------------------------------------
-# NEW: List all documents from Neon (correct table)
+# List all documents from Neon (correct table)
 # ---------------------------------------------------------
 @router.get("/list")
 def list_all_documents():
@@ -27,7 +27,7 @@ def list_all_documents():
     ]
 
 # ---------------------------------------------------------
-# NEW: Serve raw PDF files from Neon (correct system)
+# Serve raw PDF files from Neon (correct system)
 # ---------------------------------------------------------
 @router.get("/{name}")
 def get_document(name: str):
