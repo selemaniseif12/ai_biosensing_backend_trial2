@@ -1,15 +1,23 @@
 from fastapi import APIRouter
-import csv
+import base64
 import os
 
 router = APIRouter(prefix="/app")
 
-CSV_PATH = os.path.join("data", "profile_image.csv")
+PROFILE_JSON_PATH = os.path.join("data", "profile.json")
+PROFILE_IMAGE_PATH = os.path.join("data", "profile.png")
 
-@router.get("/profile/image")
-def get_profile_image():
-    with open(CSV_PATH, "r") as f:
-        reader = csv.reader(f)
-        next(reader)  # skip header
-        row = next(reader)
-        return {"image": row[0]}
+@router.get("/profile")
+def get_profile():
+    # Load JSON profile data
+    with open(PROFILE_JSON_PATH, "r", encoding="utf-8") as f:
+        profile = f.read()
+
+    # Load image and convert to Base64
+    with open(PROFILE_IMAGE_PATH, "rb") as img:
+        encoded_image = base64.b64encode(img.read()).decode("utf-8")
+
+    return {
+        "profile": profile,
+        "image": encoded_image
+    }
