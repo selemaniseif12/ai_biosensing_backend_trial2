@@ -10,6 +10,6 @@ CSV_PATH = os.path.join("data", "profile_image.csv")
 def get_profile_image():
     with open(CSV_PATH, "r") as f:
         reader = csv.reader(f)
-        next(reader)
+        next(reader)  # skip header
         row = next(reader)
         return {"image": row[0]}
