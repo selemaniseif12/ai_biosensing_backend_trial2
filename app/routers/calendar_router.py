@@ -11,6 +11,24 @@ router = APIRouter(prefix="/calendar", tags=["Consultation Calendar"])
 
 
 # ---------------------------------------------------------
+# Helper: Convert ORM object → JSON-safe dict
+# ---------------------------------------------------------
+def schedule_to_dict(schedule: ConsultationSchedule):
+    return {
+        "id": schedule.id,
+        "team_id": schedule.team_id,
+        "user_id": schedule.user_id,
+        "topic": schedule.topic,
+        "details": schedule.details,
+        "priority": schedule.priority,
+        "scheduled_time": (
+            schedule.scheduled_time.isoformat() if schedule.scheduled_time else None
+        ),
+        "status": schedule.status
+    }
+
+
+# ---------------------------------------------------------
 # 1. Monthly calendar view
 # ---------------------------------------------------------
 @router.get("/month/{year}/{month}")
@@ -20,15 +38,15 @@ def calendar_month(year: int, month: int, db: Session = Depends(get_db)):
     end_date = datetime(year, month, end_day, 23, 59, 59)
 
     schedules = db.query(ConsultationSchedule).filter(
+        ConsultationSchedule.scheduled_time != None,
         ConsultationSchedule.scheduled_time >= start_date,
         ConsultationSchedule.scheduled_time <= end_date
     ).all()
 
-    # Group by day
     calendar_data = {}
     for schedule in schedules:
         day = schedule.scheduled_time.day
-        calendar_data.setdefault(day, []).append(schedule)
+        calendar_data.setdefault(day, []).append(schedule_to_dict(schedule))
 
     return {
         "year": year,
@@ -46,19 +64,19 @@ def calendar_week(year: int, month: int, day: int, db: Session = Depends(get_db)
     end_date = start_date + timedelta(days=6)
 
     schedules = db.query(ConsultationSchedule).filter(
+        ConsultationSchedule.scheduled_time != None,
         ConsultationSchedule.scheduled_time >= start_date,
         ConsultationSchedule.scheduled_time <= end_date
     ).all()
 
-    # Group by date
     week_data = {}
     for schedule in schedules:
         date_key = schedule.scheduled_time.date().isoformat()
-        week_data.setdefault(date_key, []).append(schedule)
+        week_data.setdefault(date_key, []).append(schedule_to_dict(schedule))
 
     return {
-        "start": start_date.date(),
-        "end": end_date.date(),
+        "start": start_date.date().isoformat(),
+        "end": end_date.date().isoformat(),
         "days": week_data
     }
 
@@ -72,13 +90,14 @@ def calendar_day(year: int, month: int, day: int, db: Session = Depends(get_db))
     end_date = datetime(year, month, day, 23, 59, 59)
 
     schedules = db.query(ConsultationSchedule).filter(
+        ConsultationSchedule.scheduled_time != None,
         ConsultationSchedule.scheduled_time >= start_date,
         ConsultationSchedule.scheduled_time <= end_date
     ).all()
 
     return {
-        "date": start_date.date(),
-        "consultations": schedules
+        "date": start_date.date().isoformat(),
+        "consultations": [schedule_to_dict(s) for s in schedules]
     }
 
 
@@ -97,6 +116,7 @@ def team_calendar(team_id: int, year: int, month: int, db: Session = Depends(get
 
     schedules = db.query(ConsultationSchedule).filter(
         ConsultationSchedule.team_id == team_id,
+        ConsultationSchedule.scheduled_time != None,
         ConsultationSchedule.scheduled_time >= start_date,
         ConsultationSchedule.scheduled_time <= end_date
     ).all()
@@ -104,7 +124,7 @@ def team_calendar(team_id: int, year: int, month: int, db: Session = Depends(get
     calendar_data = {}
     for schedule in schedules:
         day = schedule.scheduled_time.day
-        calendar_data.setdefault(day, []).append(schedule)
+        calendar_data.setdefault(day, []).append(schedule_to_dict(schedule))
 
     return {
         "team_id": team_id,

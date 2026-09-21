@@ -6,16 +6,27 @@ from app.database import get_db
 from app.models.consultations import Consultation
 from app.models.team_model import Team
 from app.models.consultation_schedule import ConsultationSchedule
-from app.models.notification import Notification
-
-# ⭐ NEW IMPORT — Meeting Email Sender
-from app.services.meeting_email_service import send_meeting_email
 
 router = APIRouter(prefix="/consultations", tags=["Consultation Scheduling"])
 
 
 # ---------------------------------------------------------
-# Schedule a consultation
+# Helper: Convert ORM schedule → JSON-safe dict
+# ---------------------------------------------------------
+def schedule_to_dict(schedule: ConsultationSchedule, consultation: Consultation):
+    return {
+        "id": schedule.id,
+        "title": consultation.topic,
+        "date": schedule.scheduled_time.date().isoformat() if schedule.scheduled_time else None,
+        "time": schedule.scheduled_time.strftime("%H:%M") if schedule.scheduled_time else None,
+        "platform": "teams" if "teams" in (schedule.meeting_link or "").lower() else "google",
+        "participants": getattr(consultation, "user_email", None),
+        "meeting_link": schedule.meeting_link
+    }
+
+
+# ---------------------------------------------------------
+# 1. Schedule a consultation
 # ---------------------------------------------------------
 @router.post("/{consultation_id}/schedule")
 def schedule_consultation(
@@ -42,31 +53,21 @@ def schedule_consultation(
     db.commit()
     db.refresh(schedule)
 
-    # ⭐ NEW — Send meeting email notification
-    try:
-        send_meeting_email(
-            to_email=consultation.user_email,
-            meeting_link=meeting_link,
-            date=schedule.scheduled_time.date().isoformat(),
-            time=schedule.scheduled_time.strftime("%H:%M"),
-            topic=consultation.topic
-        )
-    except Exception as e:
-        print("Meeting email failed:", e)
-
-    return {
-        "id": schedule.id,
-        "title": consultation.topic,
+    # ⭐ Render-safe: No SMTP email sending
+    print("Meeting scheduled:", {
+        "consultation_id": consultation_id,
+        "user_email": getattr(consultation, "user_email", None),
+        "meeting_link": meeting_link,
         "date": scheduled_time.date().isoformat(),
         "time": scheduled_time.strftime("%H:%M"),
-        "platform": "teams" if "teams" in (meeting_link or "").lower() else "google",
-        "participants": consultation.user_email,
-        "meeting_link": meeting_link
-    }
+        "topic": consultation.topic
+    })
+
+    return schedule_to_dict(schedule, consultation)
 
 
 # ---------------------------------------------------------
-# Get all scheduled consultations (dashboard)
+# 2. Get all scheduled consultations (dashboard)
 # ---------------------------------------------------------
 @router.get("/scheduled")
 def get_all_scheduled(db: Session = Depends(get_db)):
@@ -75,15 +76,7 @@ def get_all_scheduled(db: Session = Depends(get_db)):
 
     for s in schedules:
         consultation = db.query(Consultation).filter(Consultation.id == s.consultation_id).first()
-
-        result.append({
-            "id": s.id,
-            "title": consultation.topic,
-            "date": s.scheduled_time.date().isoformat(),
-            "time": s.scheduled_time.strftime("%H:%M"),
-            "platform": "teams" if "teams" in (s.meeting_link or "").lower() else "google",
-            "participants": consultation.user_email,
-            "meeting_link": s.meeting_link
-        })
+        if consultation:
+            result.append(schedule_to_dict(s, consultation))
 
     return result
