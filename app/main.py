@@ -127,7 +127,7 @@ app.mount("/docs_content", StaticFiles(directory="app/docs_content"), name="docs
 # Routers
 app.include_router(auth_router, tags=["Auth"])
 app.include_router(home_router, tags=["Home"])
-app.include_router(profile_router, tags=["Profile"])
+app.include_router(profile_router, prefix="/app", tags=["Profile"])
 
 app.include_router(payments.router, prefix="/payments", tags=["Payments"])
 app.include_router(stripe_router, prefix="/store", tags=["Stripe"])
