@@ -1,0 +1,12 @@
+model GovernmentContact {
+  id            String   @id @default(cuid())
+  organization  String
+  department    String?
+  contactName   String
+  email         String
+  phone         String?
+  country       String?
+  message       String
+  priority      String   @default("medium")
+  createdAt     DateTime @default(now())
+}

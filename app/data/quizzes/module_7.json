@@ -1,0 +1,116 @@
+{
+  "module_id": 7,
+  "module_title": "API Deployment & DevOps",
+  "questions": [
+    {
+      "question_id": "7.1",
+      "question": "What is the main purpose of API deployment?",
+      "options": [
+        "To design UI components",
+        "To make the API available for users and clients",
+        "To store logs",
+        "To create documentation"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "7.2",
+      "question": "Which of the following is a common DevOps practice?",
+      "options": [
+        "Manual deployments",
+        "Continuous Integration and Continuous Deployment (CI/CD)",
+        "Ignoring logs",
+        "Hardcoding secrets"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "7.3",
+      "question": "Which tool is commonly used for containerization?",
+      "options": [
+        "Docker",
+        "Photoshop",
+        "Excel",
+        "Figma"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "7.4",
+      "question": "What is the purpose of Kubernetes?",
+      "options": [
+        "To design frontend UI",
+        "To orchestrate and manage containers",
+        "To store passwords",
+        "To compress images"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "7.5",
+      "question": "Which file is commonly used to define Docker container instructions?",
+      "options": [
+        "dockerfile.txt",
+        "Dockerfile",
+        "container.json",
+        "image.yaml"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "7.6",
+      "question": "What is environment configuration used for?",
+      "options": [
+        "Storing user passwords",
+        "Managing settings for different deployment environments",
+        "Compressing logs",
+        "Generating UI components"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "7.7",
+      "question": "Which of the following is a deployment environment?",
+      "options": [
+        "Production",
+        "Photoshop",
+        "Illustrator",
+        "Figma"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "7.8",
+      "question": "What is the purpose of API monitoring?",
+      "options": [
+        "To track API performance and errors",
+        "To design UI animations",
+        "To encrypt images",
+        "To delete logs"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "7.9",
+      "question": "Which tool is commonly used for CI/CD pipelines?",
+      "options": [
+        "GitHub Actions",
+        "Blender",
+        "Figma",
+        "Unity"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "7.10",
+      "question": "What is the purpose of load balancing in deployment?",
+      "options": [
+        "To store API keys",
+        "To distribute traffic across multiple servers",
+        "To compress data",
+        "To generate documentation"
+      ],
+      "correct_answer": 1
+    }
+  ]
+}

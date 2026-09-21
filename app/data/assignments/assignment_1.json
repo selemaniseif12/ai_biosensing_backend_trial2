@@ -1,0 +1,16 @@
+{
+  "module_id": 1,
+  "module_title": "Foundations of API Engineering",
+  "assignment_title": "API Concept Brief",
+  "description": "Write a technical brief explaining what an API is, why APIs matter, and how they enable communication between systems.",
+  "deliverables": [
+    "1–2 page written brief",
+    "Include at least 3 real-world API examples"
+  ],
+  "evaluation_criteria": [
+    "Clarity of explanation",
+    "Technical accuracy",
+    "Quality of examples",
+    "Professional writing"
+  ]
+}

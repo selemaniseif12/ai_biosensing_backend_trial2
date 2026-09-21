@@ -1,0 +1,12 @@
+id,item_id,name,type,price_usd,billing_period,description
+1,consulting_fixed,Fixed Consulting Package,service,199.00,one_time,One-hour consulting session for biosensing or ML guidance
+2,consulting_custom,Custom Consulting Package,service,499.00,one_time,Custom project consulting for labs, research teams, or startups
+3,course_intro,Intro to Biosensing & Frequency Noise,course,59.00,3_months,Foundational course on QCM sensors, noise, and biosensing basics
+4,course_ml_v2,ML V2 Training Course,course,79.00,3_months,Training on XGBoost V2 model, noise tables, and lab workflow
+5,course_ml_v6,ML V6 Training Course,course,99.00,3_months,Advanced RandomForest V6 training with 120k dataset
+6,course_fullstack_api,Full Stack API Engineering Course,course,799.00,3_months,End-to-end API engineering, backend, routers, models, and dashboards
+7,ml_v2,ML V2 Model Access,digital,49.00,3_months,Access to Analyzer V2 model, logs, noise tables, and predictions
+8,ml_v6,ML V6 Model Access,digital,69.00,3_months,Access to Analyzer V6 model, logs, noise tables, and predictions
+9,ml_bundle_v2_v6,ML V2/V6 Bundle,digital,99.00,3_months,Combined access to both ML models with comparison dashboard
+10,virus_list,Virus Database Subscription,digital,29.00,3_months,Access to 100-virus database with mass, metadata, and probabilities
+11,device_lowgrade,Low-Grade Patented Biosensing Device,physical,299.00,one_time,Educational QCM device for practical biosensing experiments

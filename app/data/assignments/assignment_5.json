@@ -1,0 +1,16 @@
+{
+  "module_id": 5,
+  "module_title": "API Testing & Debugging",
+  "assignment_title": "API Testing with Postman",
+  "description": "Use Postman to test an API with at least 10 test cases.",
+  "deliverables": [
+    "Postman collection",
+    "Screenshots of tests",
+    "Summary of bugs found"
+  ],
+  "evaluation_criteria": [
+    "Coverage of test cases",
+    "Correct use of assertions",
+    "Clear reporting"
+  ]
+}

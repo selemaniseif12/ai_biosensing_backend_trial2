@@ -1,0 +1,116 @@
+{
+  "module_id": 4,
+  "module_title": "API Data Formats & Serialization",
+  "questions": [
+    {
+      "question_id": "4.1",
+      "question": "What is serialization?",
+      "options": [
+        "Turning code into machine instructions",
+        "Converting data into a format for transmission",
+        "Encrypting API responses",
+        "Compressing server logs"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "4.2",
+      "question": "Which data format is most commonly used in modern APIs?",
+      "options": [
+        "CSV",
+        "JSON",
+        "HTML",
+        "Binary"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "4.3",
+      "question": "What does JSON stand for?",
+      "options": [
+        "JavaScript Object Notation",
+        "Java System Object Network",
+        "Joint Serialization Object Namespace",
+        "JavaScript Online Network"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "4.4",
+      "question": "Which format is more strict and verbose compared to JSON?",
+      "options": [
+        "XML",
+        "YAML",
+        "CSV",
+        "Markdown"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "4.5",
+      "question": "Which of the following is a valid JSON type?",
+      "options": [
+        "Function",
+        "Date object",
+        "Boolean",
+        "Class"
+      ],
+      "correct_answer": 2
+    },
+    {
+      "question_id": "4.6",
+      "question": "What is deserialization?",
+      "options": [
+        "Converting data into a storable format",
+        "Converting transmitted data back into usable objects",
+        "Encrypting data",
+        "Deleting unused data"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "4.7",
+      "question": "Which format is commonly used for configuration files?",
+      "options": [
+        "YAML",
+        "JPEG",
+        "MP3",
+        "PDF"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "4.8",
+      "question": "Which of the following is true about JSON?",
+      "options": [
+        "It supports comments",
+        "It is human-readable",
+        "It is binary-only",
+        "It cannot represent arrays"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "4.9",
+      "question": "Which serialization format is best for lightweight mobile APIs?",
+      "options": [
+        "XML",
+        "JSON",
+        "YAML",
+        "HTML"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "4.10",
+      "question": "What is the purpose of a schema in data serialization?",
+      "options": [
+        "To define the structure of data",
+        "To encrypt data",
+        "To compress data",
+        "To store logs"
+      ],
+      "correct_answer": 0
+    }
+  ]
+}

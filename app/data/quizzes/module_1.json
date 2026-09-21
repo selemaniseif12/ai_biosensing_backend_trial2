@@ -1,0 +1,116 @@
+{
+  "module_id": 1,
+  "module_title": "Foundations of API Engineering",
+  "questions": [
+    {
+      "question_id": "1.1",
+      "question": "What does API stand for?",
+      "options": [
+        "Application Programming Interface",
+        "Automated Program Interaction",
+        "Applied Protocol Integration",
+        "Advanced Processing Interface"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "1.2",
+      "question": "APIs allow:",
+      "options": [
+        "Hardware devices to communicate",
+        "Software systems to communicate",
+        "Humans to communicate",
+        "Servers to shut down"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "1.3",
+      "question": "Which of the following is a real-world API example?",
+      "options": [
+        "A light switch",
+        "A weather app fetching temperature",
+        "A car engine",
+        "A USB cable"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "1.4",
+      "question": "What format do most APIs use?",
+      "options": [
+        "XML",
+        "CSV",
+        "JSON",
+        "TXT"
+      ],
+      "correct_answer": 2
+    },
+    {
+      "question_id": "1.5",
+      "question": "What is the first step in an API request cycle?",
+      "options": [
+        "Server processes the request",
+        "Client sends a request",
+        "Server sends a response",
+        "Client displays the result"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "1.6",
+      "question": "Which API type is most common?",
+      "options": [
+        "SOAP",
+        "REST",
+        "GraphQL",
+        "Webhooks"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "1.7",
+      "question": "What is an API endpoint?",
+      "options": [
+        "A database",
+        "A URL that receives requests",
+        "A server",
+        "A client"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "1.8",
+      "question": "What is the purpose of API headers?",
+      "options": [
+        "To store video files",
+        "To provide metadata about the request",
+        "To store passwords",
+        "To encrypt the server"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "1.9",
+      "question": "What is a response?",
+      "options": [
+        "A request sent by the client",
+        "Data returned by the server",
+        "A database query",
+        "A file upload"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "1.10",
+      "question": "APIs are important because they:",
+      "options": [
+        "Slow down development",
+        "Prevent automation",
+        "Enable integrations",
+        "Replace servers"
+      ],
+      "correct_answer": 2
+    }
+  ]
+}

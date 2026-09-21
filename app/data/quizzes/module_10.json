@@ -1,0 +1,116 @@
+{
+  "module_id": 10,
+  "module_title": "API Lifecycle Management",
+  "questions": [
+    {
+      "question_id": "10.1",
+      "question": "What is API lifecycle management?",
+      "options": [
+        "Designing UI components",
+        "Managing an API from creation to retirement",
+        "Compressing server logs",
+        "Storing passwords"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "10.2",
+      "question": "Which phase comes first in the API lifecycle?",
+      "options": [
+        "Retirement",
+        "Design",
+        "Monitoring",
+        "Deployment"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "10.3",
+      "question": "What is the purpose of API versioning?",
+      "options": [
+        "To support changes without breaking existing clients",
+        "To compress payloads",
+        "To encrypt logs",
+        "To delete old endpoints"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "10.4",
+      "question": "Which of the following is part of API maintenance?",
+      "options": [
+        "Ignoring errors",
+        "Fixing bugs and improving performance",
+        "Removing documentation",
+        "Hardcoding secrets"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "10.5",
+      "question": "What is API deprecation?",
+      "options": [
+        "Removing an API without warning",
+        "Marking an API as outdated but still available",
+        "Encrypting API responses",
+        "Compressing data"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "10.6",
+      "question": "What is the final stage of the API lifecycle?",
+      "options": [
+        "Design",
+        "Deployment",
+        "Retirement",
+        "Testing"
+      ],
+      "correct_answer": 2
+    },
+    {
+      "question_id": "10.7",
+      "question": "Which tool helps track API usage over time?",
+      "options": [
+        "Analytics platforms",
+        "Image editors",
+        "Video renderers",
+        "CSS preprocessors"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "10.8",
+      "question": "Why is documentation important throughout the API lifecycle?",
+      "options": [
+        "It helps developers understand how to use the API",
+        "It compresses payloads",
+        "It encrypts logs",
+        "It stores passwords"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "10.9",
+      "question": "What is the purpose of API monitoring?",
+      "options": [
+        "To track performance and detect issues",
+        "To design UI animations",
+        "To compress images",
+        "To delete logs"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "10.10",
+      "question": "Which of the following is a good API lifecycle practice?",
+      "options": [
+        "Ignoring client feedback",
+        "Updating documentation with each version",
+        "Removing endpoints without notice",
+        "Hardcoding environment variables"
+      ],
+      "correct_answer": 1
+    }
+  ]
+}

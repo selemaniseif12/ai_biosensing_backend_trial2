@@ -1,0 +1,116 @@
+{
+  "module_id": 2,
+  "module_title": "API Architecture & Design",
+  "questions": [
+    {
+      "question_id": "2.1",
+      "question": "What is the primary purpose of API architecture?",
+      "options": [
+        "To define how data is stored",
+        "To define how systems communicate",
+        "To design user interfaces",
+        "To manage server hardware"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "2.2",
+      "question": "Which architectural style is most commonly used for modern APIs?",
+      "options": [
+        "Monolithic",
+        "REST",
+        "Peer-to-peer",
+        "Blockchain"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "2.3",
+      "question": "What is an API endpoint?",
+      "options": [
+        "A database table",
+        "A URL that exposes a resource",
+        "A server log file",
+        "A frontend component"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "2.4",
+      "question": "Which HTTP method is used to update existing data?",
+      "options": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ],
+      "correct_answer": 2
+    },
+    {
+      "question_id": "2.5",
+      "question": "What is the purpose of API versioning?",
+      "options": [
+        "To improve server speed",
+        "To support changes without breaking clients",
+        "To encrypt data",
+        "To reduce network traffic"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "2.6",
+      "question": "Which of the following is an example of a RESTful endpoint?",
+      "options": [
+        "/getUserData",
+        "/api/v1/users/123",
+        "/fetch-user-info",
+        "/runUserQuery"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "2.7",
+      "question": "What is API documentation used for?",
+      "options": [
+        "To store passwords",
+        "To help developers understand how to use the API",
+        "To manage server memory",
+        "To create UI designs"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "2.8",
+      "question": "Which HTTP status code indicates a successful request?",
+      "options": [
+        "404",
+        "500",
+        "200",
+        "301"
+      ],
+      "correct_answer": 2
+    },
+    {
+      "question_id": "2.9",
+      "question": "What is the purpose of API rate limiting?",
+      "options": [
+        "To prevent excessive requests",
+        "To speed up responses",
+        "To encrypt data",
+        "To delete old logs"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "2.10",
+      "question": "Which of the following is a good API design practice?",
+      "options": [
+        "Using inconsistent naming",
+        "Returning unclear error messages",
+        "Using predictable and consistent endpoints",
+        "Avoiding documentation"
+      ],
+      "correct_answer": 2
+    }
+  ]
+}

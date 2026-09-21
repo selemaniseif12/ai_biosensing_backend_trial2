@@ -1,0 +1,16 @@
+{
+  "module_id": 10,
+  "module_title": "API Lifecycle Management",
+  "assignment_title": "API Lifecycle Plan",
+  "description": "Create a lifecycle plan for an API from design to retirement.",
+  "deliverables": [
+    "Lifecycle document",
+    "Versioning strategy",
+    "Deprecation policy"
+  ],
+  "evaluation_criteria": [
+    "Completeness",
+    "Realistic planning",
+    "Professional documentation"
+  ]
+}

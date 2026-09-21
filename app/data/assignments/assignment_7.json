@@ -1,0 +1,16 @@
+{
+  "module_id": 7,
+  "module_title": "API Deployment & DevOps",
+  "assignment_title": "Deploy an API",
+  "description": "Deploy an API using Docker and optionally Kubernetes.",
+  "deliverables": [
+    "Dockerfile",
+    "Deployment instructions",
+    "Screenshot of running container"
+  ],
+  "evaluation_criteria": [
+    "Working Docker image",
+    "Clean Dockerfile",
+    "Successful deployment"
+  ]
+}

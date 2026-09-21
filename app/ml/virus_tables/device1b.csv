@@ -1,0 +1,101 @@
+Virus ID,Virus,Antibody,Antigen,mass_fg,device_id,device_sensitivity_fg,virus_count_original,virus_count_computed
+1,COVID‑19 (SARS‑CoV‑2),Anti‑Spike IgG,Spike (S1),0.00018,2,1.23,6833.333333,6833.333333
+2,Influenza A (H1N1),Anti‑HA,Hemagglutinin (HA),0.000084,2,1.23,14642.85714,14642.85714
+3,Influenza A (H3N2),Anti‑HA,Hemagglutinin,0.000084,2,1.23,14642.85714,14642.85714
+4,Influenza B,Anti‑HA,Hemagglutinin,0.000084,2,1.23,14642.85714,14642.85714
+5,SARS‑CoV‑1,Anti‑Spike IgG,Spike,0.00018,2,1.23,6833.333333,6833.333333
+6,MERS‑CoV,Anti‑Spike IgG,Spike,0.0002,2,1.23,6150,6150
+7,RSV‑A,Anti‑F protein,Fusion (F),0.00007,2,1.23,17571.42857,17571.42857
+8,RSV‑B,Anti‑G protein,Attachment (G),0.00009,2,1.23,13666.66667,13666.66667
+9,Rhinovirus A,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+10,Rhinovirus B,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+11,Rhinovirus C,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+12,Adenovirus 3,Anti‑Hexon,Hexon,0.00012,2,1.23,10250,10250
+13,Adenovirus 5,Anti‑Hexon,Hexon,0.00012,2,1.23,10250,10250
+14,Adenovirus 7,Anti‑Fiber,Fiber protein,0.00006,2,1.23,20500,20500
+15,Parainfluenza 1,Anti‑HN,Hemagglutinin‑neuraminidase,0.000075,2,1.23,16400,16400
+16,Parainfluenza 2,Anti‑HN,HN protein,0.000075,2,1.23,16400,16400
+17,Parainfluenza 3,Anti‑F,Fusion protein,0.00007,2,1.23,17571.42857,17571.42857
+18,Parainfluenza 4,Anti‑HN,HN protein,0.000075,2,1.23,16400,16400
+19,Human Metapneumovirus,Anti‑F,Fusion protein,0.00007,2,1.23,17571.42857,17571.42857
+20,Measles virus,Anti‑H,Hemagglutinin,0.00008,2,1.23,15375,15375
+21,Mumps virus,Anti‑HN,HN protein,0.000075,2,1.23,16400,16400
+22,Rubella virus,Anti‑E1,E1 glycoprotein,0.00006,2,1.23,20500,20500
+23,Varicella‑Zoster,Anti‑gE,Glycoprotein E,0.00009,2,1.23,13666.66667,13666.66667
+24,Cytomegalovirus,Anti‑gB,Glycoprotein B,0.00011,2,1.23,11181.81818,11181.81818
+25,Epstein‑Barr virus,Anti‑gp350,gp350,0.00015,2,1.23,8200,8200
+26,Human Bocavirus,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+27,Enterovirus D68,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+28,Enterovirus A71,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+29,Hantavirus,Anti‑Gn,Gn glycoprotein,0.0001,2,1.23,12300,12300
+30,Lassa virus,Anti‑GP1,GP1,0.00006,2,1.23,20500,20500
+31,Nipah virus,Anti‑G,Glycoprotein G,0.00009,2,1.23,13666.66667,13666.66667
+32,Hendra virus,Anti‑G,Glycoprotein G,0.00009,2,1.23,13666.66667,13666.66667
+33,SARS‑CoV‑2 Omicron,Anti‑Spike IgG,Spike,0.00018,2,1.23,6833.333333,6833.333333
+34,SARS‑CoV‑2 Delta,Anti‑Spike IgG,Spike,0.00018,2,1.23,6833.333333,6833.333333
+35,SARS‑CoV‑2 Alpha,Anti‑Spike IgG,Spike,0.00018,2,1.23,6833.333333,6833.333333
+36,SARS‑CoV‑2 Beta,Anti‑Spike IgG,Spike,0.00018,2,1.23,6833.333333,6833.333333
+37,SARS‑CoV‑2 Gamma,Anti‑Spike IgG,Spike,0.00018,2,1.23,6833.333333,6833.333333
+38,Human Coronavirus 229E,Anti‑S,Spike,0.00015,2,1.23,8200,8200
+39,Human Coronavirus NL63,Anti‑S,Spike,0.00015,2,1.23,8200,8200
+40,Human Coronavirus OC43,Anti‑S,Spike,0.00015,2,1.23,8200,8200
+41,Human Coronavirus HKU1,Anti‑S,Spike,0.00015,2,1.23,8200,8200
+42,Influenza C,Anti‑HEF,HEF protein,0.00009,2,1.23,13666.66667,13666.66667
+43,Influenza D,Anti‑HEF,HEF protein,0.00009,2,1.23,13666.66667,13666.66667
+44,Human Parechovirus,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+45,Human Polyomavirus,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+46,Human Mastadenovirus C,Anti‑Hexon,Hexon,0.00012,2,1.23,10250,10250
+47,Human Mastadenovirus B,Anti‑Fiber,Fiber,0.00006,2,1.23,20500,20500
+48,Human Mastadenovirus E,Anti‑Penton,Penton,0.0001,2,1.23,12300,12300
+49,Human Astrovirus,Anti‑Capsid,Capsid,0.00003,2,1.23,41000,41000
+50,Norovirus GII,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+51,Norovirus GI,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+52,Rotavirus A,Anti‑VP7,VP7,0.0001,2,1.23,12300,12300
+53,Rotavirus B,Anti‑VP4,VP4,0.00009,2,1.23,13666.66667,13666.66667
+54,Rotavirus C,Anti‑VP6,VP6,0.00008,2,1.23,15375,15375
+55,Human Reovirus,Anti‑σ1,Sigma‑1,0.00005,2,1.23,24600,24600
+56,Human Orthopneumovirus,Anti‑F,Fusion protein,0.00007,2,1.23,17571.42857,17571.42857
+57,Human Respirovirus,Anti‑HN,HN protein,0.000075,2,1.23,16400,16400
+58,Human Rubulavirus,Anti‑HN,HN protein,0.000075,2,1.23,16400,16400
+59,Human Morbillivirus,Anti‑H,Hemagglutinin,0.00008,2,1.23,15375,15375
+60,Human Alphavirus,Anti‑E2,E2 glycoprotein,0.00005,2,1.23,24600,24600
+61,Human Betacoronavirus,Anti‑S,Spike,0.00015,2,1.23,8200,8200
+62,Human Gammacoronavirus,Anti‑S,Spike,0.00015,2,1.23,8200,8200
+63,Human Deltacoronavirus,Anti‑S,Spike,0.00015,2,1.23,8200,8200
+64,Avian Influenza H5N1,Anti‑HA,Hemagglutinin,0.000084,2,1.23,14642.85714,14642.85714
+65,Avian Influenza H7N9,Anti‑HA,Hemagglutinin,0.000084,2,1.23,14642.85714,14642.85714
+66,Avian Influenza H9N2,Anti‑HA,Hemagglutinin,0.000084,2,1.23,14642.85714,14642.85714
+67,Canine Influenza H3N8,Anti‑HA,Hemagglutinin,0.000084,2,1.23,14642.85714,14642.85714
+68,Swine Influenza H1N2,Anti‑HA,Hemagglutinin,0.000084,2,1.23,14642.85714,14642.85714
+69,Swine Influenza H3N2,Anti‑HA,Hemagglutinin,0.000084,2,1.23,14642.85714,14642.85714
+70,Human Enterovirus C,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+71,Human Enterovirus B,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+72,Human Enterovirus A,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+73,Human Coxsackievirus A,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+74,Human Coxsackievirus B,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+75,Human Echovirus,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+76,Human Parechovirus 3,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+77,Human Orthobunyavirus,Anti‑Gc,Gc protein,0.00009,2,1.23,13666.66667,13666.66667
+78,Human Phlebovirus,Anti‑Gn,Gn protein,0.0001,2,1.23,12300,12300
+79,Human Arenavirus,Anti‑GP1,GP1,0.00006,2,1.23,20500,20500
+80,Human Bornavirus,Anti‑G,Glycoprotein G,0.00009,2,1.23,13666.66667,13666.66667
+81,Human Torovirus,Anti‑S,Spike,0.00015,2,1.23,8200,8200
+82,Human Hepatitis A (airborne rare),Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+83,Human Hepatitis E (airborne rare),Anti‑ORF2,ORF2 capsid,0.00008,2,1.23,15375,15375
+84,Human Polyomavirus KI,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+85,Human Polyomavirus WU,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+86,Human Parvovirus B19,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+87,Human Torque Teno Virus,Anti‑Capsid,Capsid,0.00002,2,1.23,61500,61500
+88,Human Sapovirus,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+89,Human Aichivirus,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+90,Human Cardiovirus,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+91,Human Kobuvirus,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+92,Human Salivirus,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+93,Human Cosavirus,Anti‑VP1,VP1,0.00003,2,1.23,41000,41000
+94,Human Orthoreovirus 3,Anti‑σ1,Sigma‑1,0.00005,2,1.23,24600,24600
+95,Human Rotavirus H,Anti‑VP7,VP7,0.0001,2,1.23,12300,12300
+96,Human Astrovirus MLB,Anti‑Capsid,Capsid,0.00003,2,1.23,41000,41000
+97,Human Astrovirus VA,Anti‑Capsid,Capsid,0.00003,2,1.23,41000,41000
+98,Human Adenovirus 14,Anti‑Hexon,Hexon,0.00012,2,1.23,10250,10250
+99,Human Adenovirus 55,Anti‑Hexon,Hexon,0.00012,2,1.23,10250,10250
+100,Human Adenovirus 21,Anti‑Fiber,Fiber,0.00006,2,1.23,20500,20500

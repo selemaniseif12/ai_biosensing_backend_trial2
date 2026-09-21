@@ -1,0 +1,116 @@
+{
+  "module_id": 3,
+  "module_title": "API Authentication & Security",
+  "questions": [
+    {
+      "question_id": "3.1",
+      "question": "What is the main purpose of API authentication?",
+      "options": [
+        "To speed up API responses",
+        "To verify the identity of the client",
+        "To store user passwords",
+        "To encrypt server logs"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "3.2",
+      "question": "Which authentication method uses tokens?",
+      "options": [
+        "Basic Auth",
+        "OAuth",
+        "API Keys",
+        "Captcha"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "3.3",
+      "question": "What is an API key?",
+      "options": [
+        "A hardware device",
+        "A unique identifier used to authenticate a client",
+        "A database password",
+        "A server configuration file"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "3.4",
+      "question": "Which protocol is required to secure API communication?",
+      "options": [
+        "FTP",
+        "HTTP",
+        "HTTPS",
+        "SMTP"
+      ],
+      "correct_answer": 2
+    },
+    {
+      "question_id": "3.5",
+      "question": "What does JWT stand for?",
+      "options": [
+        "Java Web Token",
+        "JSON Web Token",
+        "JavaScript Web Transport",
+        "Joint Web Transfer"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "3.6",
+      "question": "What is the purpose of a JWT signature?",
+      "options": [
+        "To compress the token",
+        "To verify the token has not been tampered with",
+        "To encrypt the payload",
+        "To store user passwords"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "3.7",
+      "question": "Which of the following is a common API attack?",
+      "options": [
+        "SQL Injection",
+        "CSS Styling",
+        "Image Compression",
+        "UI Rendering"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "3.8",
+      "question": "Rate limiting helps prevent:",
+      "options": [
+        "Slow servers",
+        "Excessive or abusive API requests",
+        "Database indexing",
+        "Frontend errors"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "3.9",
+      "question": "Which HTTP status code indicates unauthorized access?",
+      "options": [
+        "200",
+        "401",
+        "500",
+        "302"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "3.10",
+      "question": "What is the best practice for storing API keys?",
+      "options": [
+        "In frontend JavaScript",
+        "In environment variables",
+        "Inside public GitHub repositories",
+        "In HTML files"
+      ],
+      "correct_answer": 1
+    }
+  ]
+}

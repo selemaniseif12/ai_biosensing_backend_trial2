@@ -1,0 +1,16 @@
+{
+  "module_id": 9,
+  "module_title": "API Logging, Monitoring & Analytics",
+  "assignment_title": "Monitoring Dashboard",
+  "description": "Set up API monitoring using Prometheus, Grafana, or similar tools.",
+  "deliverables": [
+    "Dashboard screenshot",
+    "Metrics tracked",
+    "Explanation of insights"
+  ],
+  "evaluation_criteria": [
+    "Useful metrics",
+    "Clean dashboard",
+    "Clear interpretation"
+  ]
+}

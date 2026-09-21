@@ -1,0 +1,6 @@
+app/ml/models/
+venv/
+*.pkl
+*.dll
+*.joblib
+*.npy

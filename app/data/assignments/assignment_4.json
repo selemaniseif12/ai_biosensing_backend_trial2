@@ -1,0 +1,16 @@
+{
+  "module_id": 4,
+  "module_title": "API Data Formats & Serialization",
+  "assignment_title": "JSON & XML Serialization",
+  "description": "Create an API endpoint that returns data in both JSON and XML formats.",
+  "deliverables": [
+    "JSON response",
+    "XML response",
+    "Explanation of serialization/deserialization"
+  ],
+  "evaluation_criteria": [
+    "Correct formatting",
+    "Valid JSON/XML",
+    "Clear explanation"
+  ]
+}

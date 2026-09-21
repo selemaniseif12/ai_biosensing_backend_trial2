@@ -1,0 +1,116 @@
+{
+  "module_id": 9,
+  "module_title": "API Logging, Monitoring & Analytics",
+  "questions": [
+    {
+      "question_id": "9.1",
+      "question": "What is the main purpose of API logging?",
+      "options": [
+        "To store user passwords",
+        "To record events and errors for debugging",
+        "To compress images",
+        "To generate UI components"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "9.2",
+      "question": "Which of the following is a common logging level?",
+      "options": [
+        "DEBUG",
+        "PHOTO",
+        "STYLE",
+        "RENDER"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "9.3",
+      "question": "What is API monitoring used for?",
+      "options": [
+        "To track API performance and availability",
+        "To design frontend UI",
+        "To compress logs",
+        "To store API keys"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "9.4",
+      "question": "Which tool is commonly used for API monitoring?",
+      "options": [
+        "Prometheus",
+        "Photoshop",
+        "Figma",
+        "Blender"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "9.5",
+      "question": "What is the purpose of analytics in APIs?",
+      "options": [
+        "To understand usage patterns and performance",
+        "To encrypt data",
+        "To delete logs",
+        "To generate UI animations"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "9.6",
+      "question": "Which metric measures how long an API takes to respond?",
+      "options": [
+        "Latency",
+        "Bandwidth",
+        "Storage",
+        "Resolution"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "9.7",
+      "question": "What does uptime represent?",
+      "options": [
+        "The number of logs stored",
+        "The percentage of time the API is available",
+        "The number of endpoints",
+        "The size of the database"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "9.8",
+      "question": "Which of the following helps detect unusual API activity?",
+      "options": [
+        "Anomaly detection",
+        "Image rendering",
+        "CSS styling",
+        "Video compression"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "9.9",
+      "question": "What is the purpose of alerting systems?",
+      "options": [
+        "To notify teams when issues occur",
+        "To design UI components",
+        "To compress data",
+        "To store passwords"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "9.10",
+      "question": "Which of the following is a good logging practice?",
+      "options": [
+        "Logging sensitive data",
+        "Using structured logs",
+        "Ignoring error logs",
+        "Storing logs in frontend code"
+      ],
+      "correct_answer": 1
+    }
+  ]
+}

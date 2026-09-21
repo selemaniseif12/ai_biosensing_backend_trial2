@@ -1,0 +1,16 @@
+{
+  "module_id": 8,
+  "module_title": "API Security Best Practices",
+  "assignment_title": "Security Audit",
+  "description": "Perform a security audit on an API and identify at least 5 vulnerabilities.",
+  "deliverables": [
+    "Vulnerability list",
+    "Severity rating",
+    "Recommended fixes"
+  ],
+  "evaluation_criteria": [
+    "Accuracy",
+    "Realistic threats",
+    "Quality of recommendations"
+  ]
+}

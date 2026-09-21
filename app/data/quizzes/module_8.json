@@ -1,0 +1,116 @@
+{
+  "module_id": 8,
+  "module_title": "API Security Best Practices",
+  "questions": [
+    {
+      "question_id": "8.1",
+      "question": "What is the primary goal of API security?",
+      "options": [
+        "To improve UI animations",
+        "To protect data and prevent unauthorized access",
+        "To compress server logs",
+        "To speed up frontend rendering"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "8.2",
+      "question": "Which of the following is a secure way to store API keys?",
+      "options": [
+        "In environment variables",
+        "In frontend JavaScript",
+        "Inside public GitHub repositories",
+        "In HTML files"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "8.3",
+      "question": "What is the purpose of HTTPS?",
+      "options": [
+        "To compress images",
+        "To secure communication between client and server",
+        "To store passwords",
+        "To generate documentation"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "8.4",
+      "question": "Which of the following helps prevent SQL injection?",
+      "options": [
+        "Parameterized queries",
+        "Hardcoding credentials",
+        "Using plain HTTP",
+        "Ignoring logs"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "8.5",
+      "question": "What does 'least privilege' mean?",
+      "options": [
+        "Giving users full access",
+        "Giving users only the access they need",
+        "Blocking all access",
+        "Allowing anonymous access"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "8.6",
+      "question": "Which of the following is a common API vulnerability?",
+      "options": [
+        "Broken authentication",
+        "CSS styling",
+        "Image compression",
+        "UI rendering"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "8.7",
+      "question": "What is the purpose of input validation?",
+      "options": [
+        "To ensure data is safe before processing",
+        "To compress logs",
+        "To generate UI components",
+        "To store passwords"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "8.8",
+      "question": "Which tool is commonly used for API security testing?",
+      "options": [
+        "OWASP ZAP",
+        "Photoshop",
+        "Figma",
+        "Blender"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "8.9",
+      "question": "What does rate limiting help prevent?",
+      "options": [
+        "Excessive or abusive API requests",
+        "Frontend errors",
+        "Image compression",
+        "Database indexing"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "8.10",
+      "question": "What is the purpose of logging security events?",
+      "options": [
+        "To track suspicious activity",
+        "To design UI animations",
+        "To compress images",
+        "To delete logs"
+      ],
+      "correct_answer": 0
+    }
+  ]
+}

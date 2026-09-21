@@ -1,0 +1,16 @@
+{
+  "module_id": 6,
+  "module_title": "API Performance & Optimization",
+  "assignment_title": "Optimize API Performance",
+  "description": "Improve the performance of an API endpoint using caching, compression, or query optimization.",
+  "deliverables": [
+    "Before/after performance metrics",
+    "Explanation of optimization technique",
+    "Updated endpoint code"
+  ],
+  "evaluation_criteria": [
+    "Measurable improvement",
+    "Correct implementation",
+    "Clear justification"
+  ]
+}

@@ -1,0 +1,100 @@
+virus,device_id,deposition_rate,temperature,humidity,flow_rate,time_to_detection,mass_of_virus
+COVID‑19 (SARS‑CoV‑2),Device‑1,0.35,23,20,1.5,16,0.00018
+Influenza A (H1N1),Device‑2,0.43,24,25,1.3,18,0.000084
+Influenza A (H3N2),Device‑3,0.45,27,21,1.7,14,0.000084
+Influenza B,Device-4,0.30,29,33,1.2,13,0.000084
+SARS‑CoV‑1,Device-5,0.30,31,26,1.6,18,0.00018
+MERS‑CoV,Device‑1,0.35,20,27,1.1,19,0.0002
+RSV‑A,Device‑2,0.37,25,23,1.8,20,0.00007
+RSV‑B,Device‑3,0.36,21,22,1.5,14,0.00009
+Rhinovirus A,Device-4,0.32,33,31,1.4,11,0.00003
+Rhinovirus B,Device-5,0.41,26,24,1.25,15,0.00003
+Rhinovirus C,Device‑1,0.27,27,31,1.43,16,0.00003
+Adenovirus 3,Device‑2,0.42,23,26,1.33,17,0.00012
+Adenovirus 5,Device‑3,0.36,22,25,1.45,13,0.00012
+Adenovirus 7,Device-4,0.41,31,33,1.66,12,0.00006
+Parainfluenza 1,Device-5,0.25,24,26,1.5,18,0.000075
+Parainfluenza 2,Device‑1,0.35,31,37,1.3,17,0.000075
+Parainfluenza 3,Device‑2,0.27,26,35,1.7,18,0.00007
+Parainfluenza 4,Device‑3,0.45,24,32,1.2,12,0.000075
+Human Metapneumovirus,Device-4,0.35,22,38,1.6,14.5,0.00007
+Measles virus,Device-5,0.43,32,31,1.1,16.6,0.00008
+Mumps virus,Device‑1,0.45,25,36,1.3,14.31,0.000075
+Rubella virus,Device‑2,0.30,25,39,1.7,16,0.00006
+Varicella‑Zoster,Device‑3,0.30,31,32,1.2,14.51,0.00009
+Cytomegalovirus,Device-4,0.35,20,35,1.6,14,0.00011
+Epstein‑Barr virus,Device-5,0.37,25,30,1.1,17,0.00015
+Human Bocavirus,Device‑1,0.36,21,27,1.8,19,0.00003
+Enterovirus D68,Device‑2,0.32,33,29,1.5,13,0.00003
+Enterovirus A71,Device‑3,0.41,26,26,1.4,18,0.00003
+Hantavirus,Device-4,0.27,27,24,1.25,19,0.0001
+Lassa virus,Device-5,0.42,23,37,1.43,20,0.00006
+Nipah virus,Device‑1,0.36,22,40,1.33,14,0.00009
+Hendra virus,Device‑2,0.41,31,35,1.45,11,0.00009
+SARS‑CoV‑2 Omicron,Device‑3,0.25,24,40,1.66,15,0.00018
+SARS‑CoV‑2 Delta,Device-4,0.35,31,26,1.2,16,0.00018
+SARS‑CoV‑2 Alpha,Device-5,0.27,26,27,1.5,17,0.00018
+SARS‑CoV‑2 Beta,Device‑1,0.37,31,23,1.4,13,0.00018
+SARS‑CoV‑2 Gamma,Device‑2,0.33,20,22,1.25,12,0.00018
+Human Coronavirus 229E,Device‑3,0.29,25,31,1.43,18,0.00015
+Human Coronavirus NL63,Device-4,0.45,21,24,1.33,17,0.00015
+Human Coronavirus OC43,Device-5,0.41,33,31,1.45,18,0.00015
+Human Coronavirus HKU1,Device‑1,0.32,26,26,1.66,12,0.00015
+Influenza C,Device‑2,0.45,27,25,1.5,14.5,0.00009
+Influenza D,Device‑3,0.25,23,33,1.3,15,0.00009
+Human Parechovirus,Device-4,0.35,22,26,1.7,15,0.00003
+Human Polyomavirus,Device-5,0.27,31,37,1.2,16,0.00003
+Human Mastadenovirus C,Device‑1,0.45,24,35,1.6,18,0.00012
+Human Mastadenovirus B,Device‑2,0.35,31,32,1.1,14,0.00006
+Human Mastadenovirus E,Device‑3,0.43,26,38,1.4,13,0.0001
+Human Astrovirus,Device-4,0.45,31,31,1.25,18,0.00003
+Norovirus GII,Device-5,0.30,20,36,1.43,19,0.00003
+Norovirus GI,Device‑1,0.30,25,39,1.33,20,0.00003
+Rotavirus A,Device‑2,0.35,21,32,1.45,14,0.0001
+Rotavirus B,Device‑3,0.37,33,35,1.66,11,0.00009
+Rotavirus C,Device-4,0.36,26,30,1.2,15,0.00008
+Human Reovirus,Device-5,0.32,27,27,1.40,16,0.00005
+Human Orthopneumovirus,Device‑1,0.41,23,29,1.45,15,0.00007
+Human Respirovirus,Device‑2,0.27,22,26,1.66,15,0.000075
+Human Rubulavirus,Device‑3,0.42,31,20,1.2,16,0.000075
+Human Morbillivirus,Device-4,0.36,24,25,1.5,17,0.00008
+Human Alphavirus,Device-5,0.42,31,21,1.4,13,0.00005
+Human Betacoronavirus,Device‑1,0.36,26,33,1.25,12,0.00015
+Human Gammacoronavirus,Device‑2,0.41,31,26,1.43,18,0.00015
+Human Deltacoronavirus,Device‑3,0.25,20,27,1.33,17,0.00015
+Avian Influenza H5N1,Device-4,0.35,25,23,1.45,18,0.000084
+Avian Influenza H7N9,Device-5,0.27,21,22,1.66,12,0.000084
+Avian Influenza H9N2,Device‑1,0.37,33,31,1.5,14.5,0.000084
+Canine Influenza H3N8,Device‑2,0.33,26,24,1.3,15,0.000084
+Swine Influenza H1N2,Device‑3,0.29,27,31,1.7,15,0.000084
+Swine Influenza H3N2,Device-4,0.45,23,26,1.2,16,0.000084
+Human Enterovirus C,Device-5,0.41,22,22,1.6,15,0.00003
+Human Enterovirus B,Device‑1,0.32,31,31,1.1,14,0.00003
+Human Enterovirus A,Device‑2,0.45,24,24,1.4,13,0.00003
+Human Coxsackievirus A,Device‑3,0.25,31,31,1.25,18,0.00003
+Human Coxsackievirus B,Device-4,0.35,26,26,1.43,19,0.00003
+Human Echovirus,Device-5,0.27,25,25,1.33,20,0.00003
+Human Parechovirus 3,Device‑1,0.45,33,33,1.45,14,0.00003
+Human Orthobunyavirus,Device‑2,0.36,26,26,1.66,11,0.00009
+Human Phlebovirus,Device‑3,0.41,27,37,1.5,15,0.0001
+Human Arenavirus,Device-4,0.25,23,35,1.4,16,0.00006
+Human Bornavirus,Device-5,0.35,22,32,1.25,16,0.00009
+Human Torovirus,Device‑1,0.27,31,38,1.43,18,0.00015
+Human Hepatitis A (airborne rare),Device‑2,0.37,24,31,1.33,14,0.00003
+Human Hepatitis E (airborne rare),Device‑3,0.33,31,25,1.45,13,0.00008
+Human Polyomavirus KI,Device-4,0.29,26,21,1.25,18,0.00003
+Human Polyomavirus WU,Device-5,0.45,31,33,1.43,19,0.00003
+Human Parvovirus B19,Device‑1,0.41,20,26,1.33,20,0.00003
+Human Torque Teno Virus,Device‑2,0.32,25,27,1.45,14,0.00002
+Human Sapovirus,Device‑3,0.45,21,23,1.66,11,0.00003
+Human Aichivirus,Device-4,0.37,33,22,1.5,15,0.00003
+Human Cardiovirus,Device-5,0.33,26,22,1.3,16,0.00003
+Human Kobuvirus,Device‑1,0.29,25,31,1.7,17,0.00003
+Human Salivirus,Device‑2,0.45,33,24,1.2,13,0.00003
+Human Cosavirus,Device‑3,0.41,26,31,1.6,12,0.00003
+Human Orthoreovirus 3,Device-4,0.32,27,26,1.1,18,0.00005
+Human Rotavirus H,Device-5,0.45,23,25,1.8,19,0.0001
+Human Astrovirus MLB,Device‑1,0.25,22,33,1.5,20,0.00003
+Human Astrovirus VA,Device‑2,0.35,31,26,1.4,14,0.00003
+Human Adenovirus 14,Device‑3,0.27,24,37,1.25,11,0.00012
+Human Adenovirus 55,Device-4,0.45,31,35,1.43,15,0.00012

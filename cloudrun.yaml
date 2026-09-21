@@ -1,0 +1,14 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: biosensing-api
+spec:
+  template:
+    spec:
+      containers:
+        - image: gcr.io/YOUR_PROJECT_ID/biosensing-api
+          env:
+            - name: DATABASE_URL
+              value: "postgresql://apiuser:YOUR_PASSWORD@/biosensing?host=/cloudsql/YOUR_PROJECT_ID:us-central1:biosensing-db"
+          ports:
+            - containerPort: 8080

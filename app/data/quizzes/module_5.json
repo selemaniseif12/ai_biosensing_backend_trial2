@@ -1,0 +1,116 @@
+{
+  "module_id": 5,
+  "module_title": "API Testing & Debugging",
+  "questions": [
+    {
+      "question_id": "5.1",
+      "question": "What is the main purpose of API testing?",
+      "options": [
+        "To design user interfaces",
+        "To ensure API endpoints behave as expected",
+        "To configure servers",
+        "To store logs"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "5.2",
+      "question": "Which tool is commonly used for manual API testing?",
+      "options": [
+        "Photoshop",
+        "Postman",
+        "Excel",
+        "Figma"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "5.3",
+      "question": "Which HTTP status code indicates a client error?",
+      "options": [
+        "2xx",
+        "3xx",
+        "4xx",
+        "5xx"
+      ],
+      "correct_answer": 2
+    },
+    {
+      "question_id": "5.4",
+      "question": "What is a unit test?",
+      "options": [
+        "A test for the entire API",
+        "A test for a single function or component",
+        "A test for frontend UI",
+        "A test for database migrations"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "5.5",
+      "question": "Which tool is commonly used for automated API testing?",
+      "options": [
+        "Selenium",
+        "JMeter",
+        "Illustrator",
+        "Blender"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "5.6",
+      "question": "What is the purpose of logging in API debugging?",
+      "options": [
+        "To store user passwords",
+        "To track events and errors",
+        "To compress data",
+        "To generate documentation"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "5.7",
+      "question": "Which of the following helps identify API performance issues?",
+      "options": [
+        "Load testing",
+        "Image editing",
+        "CSS styling",
+        "Video rendering"
+      ],
+      "correct_answer": 0
+    },
+    {
+      "question_id": "5.8",
+      "question": "What does a 500 status code indicate?",
+      "options": [
+        "Client error",
+        "Server error",
+        "Redirect",
+        "Success"
+      ],
+      "correct_answer": 1
+    },
+    {
+      "question_id": "5.9",
+      "question": "Which of the following is a good debugging practice?",
+      "options": [
+        "Ignoring error logs",
+        "Testing only one endpoint",
+        "Reproducing the issue consistently",
+        "Skipping validation"
+      ],
+      "correct_answer": 2
+    },
+    {
+      "question_id": "5.10",
+      "question": "What is the purpose of API mock testing?",
+      "options": [
+        "To simulate API responses without calling the real server",
+        "To encrypt data",
+        "To delete logs",
+        "To generate UI components"
+      ],
+      "correct_answer": 0
+    }
+  ]
+}

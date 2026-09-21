@@ -1,0 +1,17 @@
+{
+  "module_id": 2,
+  "module_title": "API Architecture & Design",
+  "assignment_title": "REST API Endpoint Design",
+  "description": "Design a small REST API with at least 5 endpoints following proper REST conventions.",
+  "deliverables": [
+    "List of endpoints with methods",
+    "Example request/response JSON",
+    "Versioning strategy"
+  ],
+  "evaluation_criteria": [
+    "RESTful naming",
+    "Consistency",
+    "Correct HTTP method usage",
+    "Clean JSON structure"
+  ]
+}

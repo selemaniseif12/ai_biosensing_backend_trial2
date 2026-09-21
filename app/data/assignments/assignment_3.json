@@ -1,0 +1,16 @@
+{
+  "module_id": 3,
+  "module_title": "API Authentication & Security",
+  "assignment_title": "Implement Authentication",
+  "description": "Secure an API using API keys or JWT tokens.",
+  "deliverables": [
+    "Authentication flow diagram",
+    "Token generation example",
+    "Protected endpoint requiring authentication"
+  ],
+  "evaluation_criteria": [
+    "Correct authentication logic",
+    "Secure token handling",
+    "Clear documentation"
+  ]
+}
