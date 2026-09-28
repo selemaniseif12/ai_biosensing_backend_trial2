@@ -7,6 +7,10 @@ from app.models.consultations import Consultation
 from app.models.team_model import Team
 from app.models.consultation_schedule import ConsultationSchedule
 
+# ⭐ NEW IMPORTS
+from app.services.rate_limit import rate_limit
+from app.services.usage_logger import log_usage
+
 router = APIRouter(prefix="/consultations", tags=["Consultation Scheduling"])
 
 
@@ -33,8 +37,25 @@ def schedule_consultation(
     consultation_id: int,
     scheduled_time: datetime,
     meeting_link: str = None,
+    token: str = "",
     db: Session = Depends(get_db)
 ):
+    """
+    Schedule a consultation.
+    - Rate-limited
+    - Usage logged
+    """
+
+    # ⭐ RATE LIMITING
+    rate_limit(token, endpoint="consultation_schedule_create")
+
+    # ⭐ USAGE LOGGING
+    log_usage(
+        token=token,
+        endpoint="consultation_schedule_create",
+        details=f"Scheduled consultation {consultation_id}"
+    )
+
     consultation = db.query(Consultation).filter(Consultation.id == consultation_id).first()
     if not consultation:
         raise HTTPException(status_code=404, detail="Consultation not found")
@@ -53,7 +74,7 @@ def schedule_consultation(
     db.commit()
     db.refresh(schedule)
 
-    # ⭐ Render-safe: No SMTP email sending
+    # Render-safe: No SMTP email sending
     print("Meeting scheduled:", {
         "consultation_id": consultation_id,
         "user_email": getattr(consultation, "user_email", None),
@@ -70,7 +91,23 @@ def schedule_consultation(
 # 2. Get all scheduled consultations (dashboard)
 # ---------------------------------------------------------
 @router.get("/scheduled")
-def get_all_scheduled(db: Session = Depends(get_db)):
+def get_all_scheduled(token: str = "", db: Session = Depends(get_db)):
+    """
+    Get all scheduled consultations.
+    - Rate-limited
+    - Usage logged
+    """
+
+    # ⭐ RATE LIMITING
+    rate_limit(token, endpoint="consultation_schedule_list")
+
+    # ⭐ USAGE LOGGING
+    log_usage(
+        token=token,
+        endpoint="consultation_schedule_list",
+        details="Fetched all scheduled consultations"
+    )
+
     schedules = db.query(ConsultationSchedule).all()
     result = []
 

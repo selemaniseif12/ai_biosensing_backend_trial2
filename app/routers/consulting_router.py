@@ -4,7 +4,12 @@ from sqlalchemy.orm import Session
 from app.database import SessionLocal
 from app.models.consulting_model import ConsultingRequestModel
 
+# ⭐ NEW IMPORTS
+from app.services.rate_limit import rate_limit
+from app.services.usage_logger import log_usage
+
 router = APIRouter(prefix="/consulting", tags=["Consulting"])
+
 
 class ConsultingRequest(BaseModel):
     name: str
@@ -13,6 +18,7 @@ class ConsultingRequest(BaseModel):
     api_key: str | None = None
     project_description: str
     services: list[str]
+
 
 def save_request_to_db(payload: ConsultingRequest):
     try:
@@ -32,16 +38,36 @@ def save_request_to_db(payload: ConsultingRequest):
         print("DB error:", e)
         raise HTTPException(status_code=500, detail="Database insert failed.")
 
+
 def notify_selemani(payload: ConsultingRequest):
     print("CONSULTING REQUEST RECEIVED:")
     print(payload.dict())
     # Render-safe: no SMTP
 
+
 @router.post("")
-def submit_consulting_request(payload: ConsultingRequest):
+def submit_consulting_request(payload: ConsultingRequest, token: str):
+    """
+    Submit a consulting request.
+    - Rate-limited
+    - Usage logged
+    """
+
+    # ⭐ RATE LIMITING
+    rate_limit(token, endpoint="consulting_submit")
+
+    # ⭐ USAGE LOGGING
+    log_usage(
+        token=token,
+        endpoint="consulting_submit",
+        details=f"Consulting request from {payload.email}"
+    )
+
     print("Received consulting request:", payload.dict())
 
     save_request_to_db(payload)
     notify_selemani(payload)
 
-    return {"message": "Your consulting request was delivered successfully and logged."}
+    return {
+        "message": "Your consulting request was delivered successfully and logged."
+    }

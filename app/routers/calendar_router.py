@@ -7,6 +7,10 @@ from app.database import get_db
 from app.models.consultation_schedule import ConsultationSchedule
 from app.models.team_model import Team
 
+# ⭐ NEW IMPORTS
+from app.services.rate_limit import rate_limit
+from app.services.usage_logger import log_usage
+
 router = APIRouter(prefix="/calendar", tags=["Consultation Calendar"])
 
 
@@ -32,7 +36,23 @@ def schedule_to_dict(schedule: ConsultationSchedule):
 # 1. Monthly calendar view
 # ---------------------------------------------------------
 @router.get("/month/{year}/{month}")
-def calendar_month(year: int, month: int, db: Session = Depends(get_db)):
+def calendar_month(year: int, month: int, token: str = "", db: Session = Depends(get_db)):
+    """
+    Monthly calendar view.
+    - Rate-limited
+    - Usage logged
+    """
+
+    # ⭐ RATE LIMITING
+    rate_limit(token, endpoint="calendar_month")
+
+    # ⭐ USAGE LOGGING
+    log_usage(
+        token=token,
+        endpoint="calendar_month",
+        details=f"Calendar month view {year}-{month}"
+    )
+
     start_date = datetime(year, month, 1)
     end_day = monthrange(year, month)[1]
     end_date = datetime(year, month, end_day, 23, 59, 59)
@@ -59,7 +79,23 @@ def calendar_month(year: int, month: int, db: Session = Depends(get_db)):
 # 2. Weekly calendar view
 # ---------------------------------------------------------
 @router.get("/week/{year}/{month}/{day}")
-def calendar_week(year: int, month: int, day: int, db: Session = Depends(get_db)):
+def calendar_week(year: int, month: int, day: int, token: str = "", db: Session = Depends(get_db)):
+    """
+    Weekly calendar view.
+    - Rate-limited
+    - Usage logged
+    """
+
+    # ⭐ RATE LIMITING
+    rate_limit(token, endpoint="calendar_week")
+
+    # ⭐ USAGE LOGGING
+    log_usage(
+        token=token,
+        endpoint="calendar_week",
+        details=f"Calendar week view starting {year}-{month}-{day}"
+    )
+
     start_date = datetime(year, month, day)
     end_date = start_date + timedelta(days=6)
 
@@ -85,7 +121,23 @@ def calendar_week(year: int, month: int, day: int, db: Session = Depends(get_db)
 # 3. Daily agenda
 # ---------------------------------------------------------
 @router.get("/day/{year}/{month}/{day}")
-def calendar_day(year: int, month: int, day: int, db: Session = Depends(get_db)):
+def calendar_day(year: int, month: int, day: int, token: str = "", db: Session = Depends(get_db)):
+    """
+    Daily agenda.
+    - Rate-limited
+    - Usage logged
+    """
+
+    # ⭐ RATE LIMITING
+    rate_limit(token, endpoint="calendar_day")
+
+    # ⭐ USAGE LOGGING
+    log_usage(
+        token=token,
+        endpoint="calendar_day",
+        details=f"Calendar day view {year}-{month}-{day}"
+    )
+
     start_date = datetime(year, month, day)
     end_date = datetime(year, month, day, 23, 59, 59)
 
@@ -105,7 +157,23 @@ def calendar_day(year: int, month: int, day: int, db: Session = Depends(get_db))
 # 4. Team-specific calendar
 # ---------------------------------------------------------
 @router.get("/team/{team_id}/{year}/{month}")
-def team_calendar(team_id: int, year: int, month: int, db: Session = Depends(get_db)):
+def team_calendar(team_id: int, year: int, month: int, token: str = "", db: Session = Depends(get_db)):
+    """
+    Team-specific monthly calendar.
+    - Rate-limited
+    - Usage logged
+    """
+
+    # ⭐ RATE LIMITING
+    rate_limit(token, endpoint="calendar_team")
+
+    # ⭐ USAGE LOGGING
+    log_usage(
+        token=token,
+        endpoint="calendar_team",
+        details=f"Team calendar view team={team_id} {year}-{month}"
+    )
+
     team = db.query(Team).filter(Team.id == team_id).first()
     if not team:
         raise HTTPException(status_code=404, detail="Team not found")

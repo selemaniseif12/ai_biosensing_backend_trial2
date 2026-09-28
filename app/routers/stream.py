@@ -4,10 +4,14 @@ from firebase_admin import auth
 import asyncio, json, time
 
 from app.database import Base, engine, SessionLocal
-
 from app.models.sensor_history import SensorHistory
 
+# ⭐ NEW IMPORTS
+from app.services.rate_limit import rate_limit
+from app.services.usage_logger import log_usage
+
 router = APIRouter()
+
 
 # ---------------------------------------------------------
 # Firebase Token Verification (Query Param for SSE)
@@ -72,14 +76,25 @@ async def generate_ecg(device_id="global"):
         value = round(0.5 + (time.time() % 1), 3)
         await save_history(device_id, "ecg", value)
         yield f"data: {json.dumps({'timestamp': time.time(), 'value': value})}\n\n"
-        await asyncio.sleep(0.05)  # faster ECG sampling
+        await asyncio.sleep(0.05)
 
 
 # ---------------------------------------------------------
 # Global Sensor Streams (no device ID)
 # ---------------------------------------------------------
 @router.get("/stream/sensor/temperature")
-async def stream_temperature(user=Depends(verify_firebase_token)):
+async def stream_temperature(token: str, user=Depends(verify_firebase_token)):
+
+    # ⭐ RATE LIMITING
+    rate_limit(token, endpoint="stream_temperature")
+
+    # ⭐ USAGE LOGGING
+    log_usage(
+        token=token,
+        endpoint="stream_temperature",
+        details="Global temperature stream"
+    )
+
     return StreamingResponse(
         generate_temperature("global"),
         media_type="text/event-stream"
@@ -87,7 +102,16 @@ async def stream_temperature(user=Depends(verify_firebase_token)):
 
 
 @router.get("/stream/sensor/humidity")
-async def stream_humidity(user=Depends(verify_firebase_token)):
+async def stream_humidity(token: str, user=Depends(verify_firebase_token)):
+
+    rate_limit(token, endpoint="stream_humidity")
+
+    log_usage(
+        token=token,
+        endpoint="stream_humidity",
+        details="Global humidity stream"
+    )
+
     return StreamingResponse(
         generate_humidity("global"),
         media_type="text/event-stream"
@@ -95,7 +119,16 @@ async def stream_humidity(user=Depends(verify_firebase_token)):
 
 
 @router.get("/stream/sensor/pressure")
-async def stream_pressure(user=Depends(verify_firebase_token)):
+async def stream_pressure(token: str, user=Depends(verify_firebase_token)):
+
+    rate_limit(token, endpoint="stream_pressure")
+
+    log_usage(
+        token=token,
+        endpoint="stream_pressure",
+        details="Global pressure stream"
+    )
+
     return StreamingResponse(
         generate_pressure("global"),
         media_type="text/event-stream"
@@ -103,7 +136,16 @@ async def stream_pressure(user=Depends(verify_firebase_token)):
 
 
 @router.get("/stream/sensor/ecg")
-async def stream_ecg(user=Depends(verify_firebase_token)):
+async def stream_ecg(token: str, user=Depends(verify_firebase_token)):
+
+    rate_limit(token, endpoint="stream_ecg")
+
+    log_usage(
+        token=token,
+        endpoint="stream_ecg",
+        details="Global ECG stream"
+    )
+
     return StreamingResponse(
         generate_ecg("global"),
         media_type="text/event-stream"
@@ -117,8 +159,20 @@ async def stream_ecg(user=Depends(verify_firebase_token)):
 async def stream_device_sensor(
     device_id: str,
     sensor_type: str,
+    token: str,
     user=Depends(verify_firebase_token)
 ):
+
+    # ⭐ RATE LIMITING
+    rate_limit(token, endpoint=f"stream_device_{sensor_type}")
+
+    # ⭐ USAGE LOGGING
+    log_usage(
+        token=token,
+        endpoint=f"stream_device_{sensor_type}",
+        details=f"Device={device_id}, sensor={sensor_type}"
+    )
+
     generators = {
         "temperature": generate_temperature,
         "humidity": generate_humidity,

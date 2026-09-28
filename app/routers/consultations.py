@@ -5,6 +5,10 @@ from datetime import datetime
 from app.database import get_db
 from app.models.consultations import Consultation
 
+# ⭐ NEW IMPORTS
+from app.services.rate_limit import rate_limit
+from app.services.usage_logger import log_usage
+
 router = APIRouter(prefix="/consultations", tags=["Consultation Management"])
 
 
@@ -31,8 +35,25 @@ def schedule_consultation(
     consultation_id: int,
     scheduled_time: str,
     meeting_link: str = None,
+    token: str = "",
     db: Session = Depends(get_db)
 ):
+    """
+    Schedule a consultation.
+    - Rate-limited
+    - Usage logged
+    """
+
+    # ⭐ RATE LIMITING
+    rate_limit(token, endpoint="consultation_schedule")
+
+    # ⭐ USAGE LOGGING
+    log_usage(
+        token=token,
+        endpoint="consultation_schedule",
+        details=f"Scheduled consultation {consultation_id}"
+    )
+
     consultation = db.query(Consultation).filter(Consultation.id == consultation_id).first()
 
     if not consultation:
