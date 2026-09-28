@@ -16,3 +16,5 @@ python-jose
 passlib[bcrypt]
 pytz
 argon2-cffi
+psycopg[binary]
+
