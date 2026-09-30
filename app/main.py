@@ -3,7 +3,7 @@ load_dotenv()
 
 import os
 import logging.config
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
@@ -40,7 +40,7 @@ from app.models.user import User
 from app.routers.home_router import router as home_router
 from app.routers.profile_router import router as profile_router
 
-# Marketplace Routers (EXACTLY AS ORIGINAL)
+# Marketplace Routers
 from app.routers import payments
 from app.routers.stripe_router import router as stripe_router
 from app.routers.cart_router import router as cart_router
@@ -52,32 +52,12 @@ from app.routers.checkout_router import router as checkout_router
 # Auth
 from app.routers.auth import router as auth_router
 
-# Courses (DISABLED)
-# from app.routers.course_router import router as course_router
-# from app.routers.course_module_router import router as course_module_router
-# from app.routers.course_content_router import router as course_content_router
-# from app.routers.course_access_router import router as course_access_router
-
-# Enrollment + Activity (DISABLED)
-# from app.routers.enrollment import router as enrollment_router
-# from app.routers.activity import router as activity_router
-
 # Consulting (ACTIVE)
 from app.routers.consultations import router as consultations_router
 from app.routers.consulting_router import router as consulting_router
 
-# Students (DISABLED)
-# from app.routers.students import router as students_router
-
 # Admin schedule (ACTIVE)
 from app.routers.consultation_schedule_router import router as consultation_schedule_router
-
-# Notifications + Team workload (DISABLED)
-# from app.routers.notification_router import router as notification_router
-# from app.routers.team_workload_router import router as team_workload_router
-
-# Calendar (REMOVED — BROKEN)
-# from app.routers.calendar_router import router as calendar_router
 
 # Token admin (ACTIVE)
 from app.routers.token_admin import router as token_admin_router
@@ -90,7 +70,6 @@ from app.routers.payments_router import router as payments_router
 
 # Documentation router (ACTIVE)
 from app.routers.docs import router as docs_router
-from fastapi.staticfiles import StaticFiles
 
 # Virus list router (ACTIVE)
 from app.routers.virus_list import router as virus_list_router
@@ -98,6 +77,7 @@ from app.routers.virus_list import router as virus_list_router
 # ML Routers (ACTIVE)
 from app.routers.sensor_live_drift import router as sensor_live_drift_router
 from app.routers.ml_training_router import router as ml_training_router
+
 
 # Lifespan
 @asynccontextmanager
@@ -137,13 +117,43 @@ async def startup_event():
     seed_store_products(db)
     db.close()
 
-# Static files
+
+# ---------------------------
+# STATIC FILES
+# ---------------------------
+
+# Existing static folder
 os.makedirs("static/slides", exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Docs content
-app.mount("/docs_content", StaticFiles(directory="app/docs_content"), name="docs_content")
+# Documentation PDFs (Render + Vercel)
 app.mount("/docs", StaticFiles(directory="app/docs_content"), name="docs")
+
+
+# ---------------------------
+# DOCUMENT LIST ENDPOINT
+# ---------------------------
+
+docs_api = APIRouter()
+
+@docs_api.get("/docs/list")
+def list_docs():
+    folder = "app/docs_content"
+    files = os.listdir(folder)
+    docs = []
+
+    for f in files:
+        if f.lower().endswith(".pdf"):
+            docs.append({
+                "id": f,
+                "name": f,
+                "title": f.replace("_", " ").replace(".pdf", "").title()
+            })
+
+    return docs
+
+app.include_router(docs_api)
+
 
 # ---------------------------
 # ACTIVE ROUTERS (FINAL RELEASE)
@@ -157,11 +167,11 @@ app.include_router(home_router, tags=["Home"])
 app.include_router(profile_router, prefix="/app", tags=["Profile"])
 app.include_router(docs_router, tags=["Documents"])
 
-# Consulting (public + admin)
+# Consulting
 app.include_router(consultations_router, tags=["Consultations"])
 app.include_router(consulting_router)
 
-# Admin (simple)
+# Admin
 app.include_router(token_admin_router)
 app.include_router(consultation_schedule_router)
 
@@ -172,22 +182,21 @@ app.include_router(virus_list_router, tags=["Virus List"])
 app.include_router(ml_training_router, tags=["ML Training"])
 app.include_router(sensor_live_drift_router)
 
-# Marketplace (EXACTLY AS ORIGINAL)
+# Marketplace
 app.include_router(payments.router, prefix="/payments", tags=["Payments"])
 app.include_router(stripe_router, prefix="/store", tags=["Stripe"])
 app.include_router(stripe_webhook_router, tags=["Stripe Webhook"])
-
 app.include_router(store_router, tags=["Store"])
 app.include_router(cart_router, tags=["Cart"])
 app.include_router(checkout_router)
-
 app.include_router(payment_webhook_router)
 app.include_router(payments_router)
 
 init_receipts(app)
 
+
 # ---------------------------
-# Email sender
+# EMAIL SENDER
 # ---------------------------
 from pydantic import BaseModel
 import smtplib
@@ -231,9 +240,11 @@ def send_email(req: EmailRequest):
     except Exception as e:
         return {"status": "error", "details": str(e)}
 
+
 @app.get("/")
 def root():
     return {"message": "AI Biosensing API is running"}
+
 
 # Render‑compatible server start
 if __name__ == "__main__":
