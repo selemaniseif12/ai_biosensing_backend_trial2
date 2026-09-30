@@ -1,41 +1,45 @@
-from fastapi import APIRouter, Response, HTTPException
-from app.database import SessionLocal
-from app.models.document_file import DocumentFile
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import FileResponse
+import os
 
 router = APIRouter(
     prefix="/docs",
-    tags=["Documents"]   # ⭐ FIXED: unified tag to remove Swagger duplication
+    tags=["Documents"]
 )
 
 # ---------------------------------------------------------
-# List all documents from Neon (correct table)
+# List all PDF documents from filesystem
 # ---------------------------------------------------------
 @router.get("/list")
 def list_all_documents():
-    db = SessionLocal()
-    docs = db.query(DocumentFile).all()
-    db.close()
+    folder = "./app/docs_content"
+    files = os.listdir(folder)
+    docs = []
 
-    return [
-        {
-            "id": doc.id,
-            "name": doc.name,
-            "title": doc.title if hasattr(doc, "title") else doc.name,
-            "category": doc.category if hasattr(doc, "category") else "General"
-        }
-        for doc in docs
-    ]
+    for f in files:
+        if f.lower().endswith(".pdf"):
+            docs.append({
+                "id": f,
+                "name": f,
+                "title": f.replace("_", " ").replace(".pdf", "").title(),
+                "category": "General"
+            })
+
+    return docs
 
 # ---------------------------------------------------------
-# Serve raw PDF files from Neon (correct system)
+# Serve raw PDF files from filesystem
 # ---------------------------------------------------------
+DOCS_FOLDER = "./app/docs_content"
+
 @router.get("/{name}")
 def get_document(name: str):
-    db = SessionLocal()
-    doc = db.query(DocumentFile).filter(DocumentFile.name == name).first()
-    db.close()
+    file_path = os.path.join(DOCS_FOLDER, name)
 
-    if not doc:
-        raise HTTPException(status_code=404, detail="Document not found")
+    if not os.path.exists(file_path):
+        raise HTTPException(
+            status_code=404,
+            detail=f"PDF file '{name}' not found in docs_content folder"
+        )
 
-    return Response(content=doc.content, media_type="application/pdf")
+    return FileResponse(file_path, media_type="application/pdf")
