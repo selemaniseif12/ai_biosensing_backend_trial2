@@ -3,7 +3,7 @@ load_dotenv()
 
 import os
 import logging.config
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
@@ -24,10 +24,7 @@ from app.models.course_module import CourseModule
 from app.models.course_content import CourseContent
 from app.models.enrollment import Enrollment
 from app.models.activity import Activity
-
-# Correct product model
 from app.models.products import Product
-
 from app.models.cart_item import CartItem
 from app.models.receipt import Receipt
 from app.models.document import Document
@@ -68,7 +65,7 @@ from app.routers.receipts_router import init_receipts
 # Payments router (ACTIVE)
 from app.routers.payments_router import router as payments_router
 
-# Documentation router (ACTIVE)
+# Documentation router (Neon-based, ACTIVE)
 from app.routers.docs import router as docs_router
 
 # Virus list router (ACTIVE)
@@ -79,10 +76,10 @@ from app.routers.sensor_live_drift import router as sensor_live_drift_router
 from app.routers.ml_training_router import router as ml_training_router
 
 
-# Lifespan
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     yield
+
 
 app = FastAPI(
     title="AI Biosensing API",
@@ -122,41 +119,13 @@ async def startup_event():
 # STATIC FILES
 # ---------------------------
 
-# Existing static folder
 os.makedirs("static/slides", exist_ok=True)
 app.mount("/static", StaticFiles(directory="./static"), name="static")
-
-# Documentation PDFs (Render + Vercel)
-app.mount("/docs", StaticFiles(directory="./app/docs_content"), name="docs")
+# ❌ No static /docs mount here — documents are served via Neon-based docs router
 
 
 # ---------------------------
-# DOCUMENT LIST ENDPOINT
-# ---------------------------
-
-docs_api = APIRouter()
-
-@docs_api.get("/docs/list")
-def list_docs():
-    folder = "./app/docs_content"
-    files = os.listdir(folder)
-    docs = []
-
-    for f in files:
-        if f.lower().endswith(".pdf"):
-            docs.append({
-                "id": f,
-                "name": f,
-                "title": f.replace("_", " ").replace(".pdf", "").title()
-            })
-
-    return docs
-
-app.include_router(docs_api)
-
-
-# ---------------------------
-# ACTIVE ROUTERS (FINAL RELEASE)
+# ACTIVE ROUTERS
 # ---------------------------
 
 # Auth
@@ -198,6 +167,7 @@ init_receipts(app)
 # ---------------------------
 # EMAIL SENDER
 # ---------------------------
+
 from pydantic import BaseModel
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -206,10 +176,12 @@ from email.mime.text import MIMEText
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASS = os.getenv("EMAIL_PASS")
 
+
 class EmailRequest(BaseModel):
     to: str
     subject: str
     message: str
+
 
 @app.post("/send-email")
 def send_email(req: EmailRequest):
@@ -246,7 +218,6 @@ def root():
     return {"message": "AI Biosensing API is running"}
 
 
-# Render‑compatible server start
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)
