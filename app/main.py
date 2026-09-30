@@ -90,6 +90,7 @@ from app.routers.payments_router import router as payments_router
 
 # Documentation router (ACTIVE)
 from app.routers.docs import router as docs_router
+from fastapi.staticfiles import StaticFiles
 
 # Virus list router (ACTIVE)
 from app.routers.virus_list import router as virus_list_router
@@ -142,6 +143,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Docs content
 app.mount("/docs_content", StaticFiles(directory="app/docs_content"), name="docs_content")
+app.mount("/docs", StaticFiles(directory="app/docs_content"), name="docs")
 
 # ---------------------------
 # ACTIVE ROUTERS (FINAL RELEASE)
