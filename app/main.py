@@ -124,10 +124,10 @@ async def startup_event():
 
 # Existing static folder
 os.makedirs("static/slides", exist_ok=True)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="./static"), name="static")
 
 # Documentation PDFs (Render + Vercel)
-app.mount("/docs", StaticFiles(directory="app/docs_content"), name="docs")
+app.mount("/docs", StaticFiles(directory="./app/docs_content"), name="docs")
 
 
 # ---------------------------
@@ -138,7 +138,7 @@ docs_api = APIRouter()
 
 @docs_api.get("/docs/list")
 def list_docs():
-    folder = "app/docs_content"
+    folder = "./app/docs_content"
     files = os.listdir(folder)
     docs = []
 
