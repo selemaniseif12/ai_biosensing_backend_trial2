@@ -17,4 +17,5 @@ passlib[bcrypt]
 pytz
 argon2-cffi
 psycopg[binary]
+redis==5.0.1
 
