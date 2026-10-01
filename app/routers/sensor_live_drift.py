@@ -1,11 +1,9 @@
 from fastapi import APIRouter
 import random
 
-# NEW IMPORTS
 from app.services.rate_limit import rate_limit
 from app.services.usage_logger import log_usage
 
-# ⭐ REQUIRED — THIS WAS MISSING AND CAUSED THE CRASH
 router = APIRouter(prefix="/sensor", tags=["Sensor Drift"])
 
 BASE_F = 1693999.68345656012345
@@ -52,13 +50,13 @@ def live_init(token: str = None, start_time: int = 0, stop_time: int = 100):
     - store start/stop time
     """
 
-    # ⭐ RATE LIMITING (only if token provided)
+    # Strict rate limit for init: 5 req/min per token
     if token:
-        rate_limit(token, endpoint="sensor_live_init")
+        rate_limit(token, endpoint="sensor_live_init", limit=5, window_seconds=60)
         log_usage(
             token=token,
             endpoint="sensor_live_init",
-            details=f"Init sweep start={start_time}, stop={stop_time}"
+            details=f"Init sweep start={start_time}, stop={stop_time}",
         )
 
     global current_second, cumulative_drift, start_t, stop_t, initialized
@@ -74,7 +72,7 @@ def live_init(token: str = None, start_time: int = 0, stop_time: int = 100):
         "message": "Sweep initialized",
         "base_frequency_hz": BASE_F,
         "start_time": start_t,
-        "stop_time": stop_t
+        "stop_time": stop_t,
     }
 
 
@@ -86,13 +84,13 @@ def live_tick(token: str = None, threshold: float = 0.1):
     After stop, next run starts at zero automatically.
     """
 
-    # ⭐ RATE LIMITING (only if token provided)
+    # Strict rate limit for tick: 10 req/min per token
     if token:
-        rate_limit(token, endpoint="sensor_live_tick")
+        rate_limit(token, endpoint="sensor_live_tick", limit=10, window_seconds=60)
         log_usage(
             token=token,
             endpoint="sensor_live_tick",
-            details=f"threshold={threshold}"
+            details=f"threshold={threshold}",
         )
 
     global current_second, cumulative_drift, start_t, stop_t, initialized
@@ -114,7 +112,7 @@ def live_tick(token: str = None, threshold: float = 0.1):
             "base_frequency_hz": BASE_F,
             "measured_frequency_hz": BASE_F + cumulative_drift,
             "drift_hz": cumulative_drift,
-            "message": "Sweep finished"
+            "message": "Sweep finished",
         }
 
     window = stop_t - start_t
@@ -135,7 +133,7 @@ def live_tick(token: str = None, threshold: float = 0.1):
         "base_frequency_hz": BASE_F,
         "measured_frequency_hz": measured,
         "drift_hz": cumulative_drift,
-        "threshold": threshold
+        "threshold": threshold,
     }
 
     current_second += 1
