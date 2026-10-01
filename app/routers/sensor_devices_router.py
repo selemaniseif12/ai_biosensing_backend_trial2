@@ -6,7 +6,8 @@ router = APIRouter(prefix="/sensor-devices", tags=["Sensor Devices"])
 def sensor_devices_info():
     return {
         "title": "Sensor Devices",
-        "image_url": "/static/sensor_devices/device.png",
+        # Updated to point to your Vercel frontend public folder
+        "image_url": "https://ai-biosensing-frontend-v2.vercel.app/device.png",
         "content": [
             "The sensor devices demonstrated in our MLDrift simulation represent the foundational version of our patented low‑grade biosensing technology. These devices are engineered to detect analytes at picogram‑level sensitivity, forming the baseline capability of our broader Piezo‑Pico to Femtotechnology Sensors Inc. platform.",
             
