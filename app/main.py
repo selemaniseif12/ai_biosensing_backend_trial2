@@ -121,7 +121,6 @@ async def startup_event():
 
 os.makedirs("static/slides", exist_ok=True)
 app.mount("/static", StaticFiles(directory="./static"), name="static")
-# ❌ No static /docs mount here — documents are served via Neon-based docs router
 
 
 # ---------------------------
@@ -213,10 +212,18 @@ def send_email(req: EmailRequest):
         return {"status": "error", "details": str(e)}
 
 
+# ---------------------------
+# ROOT HEALTH CHECK (REQUIRED FOR RENDER)
+# ---------------------------
+
 @app.get("/")
 def root():
-    return {"message": "AI Biosensing API is running"}
+    return {"status": "ok", "message": "AI Biosensing API is running"}
 
+
+# ---------------------------
+# UVICORN ENTRYPOINT
+# ---------------------------
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
