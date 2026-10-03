@@ -75,6 +75,8 @@ from app.routers.virus_list import router as virus_list_router
 from app.routers.sensor_live_drift import router as sensor_live_drift_router
 from app.routers.ml_training_router import router as ml_training_router
 from app.routers.sensor_devices_router import router as sensor_devices_router
+#Government
+from app.routers.government import router as government_router
 
 
 
@@ -152,6 +154,8 @@ app.include_router(virus_list_router, tags=["Virus List"])
 app.include_router(ml_training_router, tags=["ML Training"])
 app.include_router(sensor_live_drift_router)
 app.include_router(sensor_devices_router)
+#Government
+app.include_router(government_router)
 
 # Marketplace
 app.include_router(payments.router, prefix="/payments", tags=["Payments"])
