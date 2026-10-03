@@ -15,4 +15,3 @@ class GovernmentMessage(Base):
     message = Column(String)
     priority = Column(String)
     createdAt = Column(DateTime, server_default=func.now())
-
