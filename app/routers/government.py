@@ -48,9 +48,9 @@ def submit_government_contact(payload: GovernmentContact):
         return {"success": True, "id": new_msg.id}
 
     except Exception as e:
-        print("Government contact error:", e)
+        print("🔥 GOVERNMENT INSERT ERROR:", e)
         db.rollback()
-        return {"success": False}
+        return {"success": False, "error": str(e)}
 
     finally:
         db.close()
@@ -71,8 +71,8 @@ def get_all_government_messages():
         return {"success": True, "data": messages}
 
     except Exception as e:
-        print("Government fetch error:", e)
-        return {"success": False, "data": []}
+        print("🔥 GOVERNMENT FETCH ERROR:", e)
+        return {"success": False, "data": [], "error": str(e)}
 
     finally:
         db.close()
