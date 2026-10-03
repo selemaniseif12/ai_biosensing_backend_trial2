@@ -26,7 +26,6 @@ class GovernmentContact(BaseModel):
 def send_email_notifications(payload: GovernmentContact):
     sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
 
-    # Admin email content
     admin_subject = f"New Government Contact Request — {payload.organization}"
     admin_body = f"""
 A new government contact request has been submitted.
@@ -45,7 +44,6 @@ Message:
 Submitted at: {datetime.utcnow()}
 """
 
-    # User confirmation email content
     user_subject = "Your Government Contact Request Has Been Received"
     user_body = f"""
 Hello {payload.contactName},
@@ -64,7 +62,6 @@ Best regards,
 Piezo-Pico to Femtotechnology Sensors Inc.
 """
 
-    # Admin emails (send to both)
     admin_emails = [
         "selemaniseif12@yahoo.com",
         "selemaniseif1974@gmail.com"
@@ -72,16 +69,15 @@ Piezo-Pico to Femtotechnology Sensors Inc.
 
     for admin_email in admin_emails:
         message = Mail(
-            from_email="selemaniseif1974@gmail.com",  # VERIFIED SENDER
+            from_email="selemaniseif1974@gmail.com",
             to_emails=admin_email,
             subject=admin_subject,
             plain_text_content=admin_body
         )
         sg.send(message)
 
-    # Send confirmation to user
     message_user = Mail(
-        from_email="selemaniseif1974@gmail.com",  # VERIFIED SENDER
+        from_email="selemaniseif1974@gmail.com",
         to_emails=payload.email,
         subject=user_subject,
         plain_text_content=user_body
@@ -110,7 +106,6 @@ def submit_government_contact(payload: GovernmentContact):
         db.commit()
         db.refresh(new_msg)
 
-        # Send emails
         send_email_notifications(payload)
 
         return {"success": True, "id": new_msg.id}
