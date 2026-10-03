@@ -1,5 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
-from app.database import Base
+from sqlalchemy.sql import func
 
 class GovernmentMessage(Base):
     __tablename__ = "government_messages"
@@ -13,4 +12,4 @@ class GovernmentMessage(Base):
     country = Column(String)
     message = Column(String)
     priority = Column(String)
-    createdAt = Column(DateTime)
+    createdAt = Column(DateTime, server_default=func.now())
