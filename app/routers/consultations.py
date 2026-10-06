@@ -8,6 +8,7 @@ from app.models.consultations import Consultation
 # ⭐ NEW IMPORTS
 from app.services.rate_limit import rate_limit
 from app.services.usage_logger import log_usage
+from app.services.email_service import send_email   # <-- Gmail SMTP sender
 
 router = APIRouter(prefix="/consultations", tags=["Consultation Management"])
 
@@ -73,11 +74,36 @@ def schedule_consultation(
     db.commit()
     db.refresh(consultation)
 
-    # Render-safe: No SMTP email sending
-    print("Consultation scheduled:", {
-        "consultation_id": consultation.id,
-        "scheduled_time": parsed_time.isoformat(),
-        "meeting_link": meeting_link
-    })
+    # ⭐ EMAIL NOTIFICATIONS (Gmail SMTP)
+    user_email = getattr(consultation, "user_email", None)
+
+    # Send confirmation to user
+    if user_email:
+        send_email(
+            email_to=user_email,
+            subject="Your Consultation Has Been Scheduled",
+            body=(
+                f"Hello,\n\n"
+                f"Your consultation has been scheduled.\n\n"
+                f"Date: {parsed_time.date().isoformat()}\n"
+                f"Time: {parsed_time.strftime('%H:%M')}\n"
+                f"Meeting Link: {meeting_link}\n\n"
+                f"Thank you."
+            )
+        )
+
+    # Send admin notification
+    send_email(
+        email_to="selemaniseif12@yahoo.com",
+        subject="New Consultation Scheduled",
+        body=(
+            f"A consultation has been scheduled.\n\n"
+            f"Consultation ID: {consultation.id}\n"
+            f"User Email: {user_email}\n"
+            f"Date: {parsed_time.date().isoformat()}\n"
+            f"Time: {parsed_time.strftime('%H:%M')}\n"
+            f"Meeting Link: {meeting_link}\n"
+        )
+    )
 
     return consultation_to_dict(consultation)

@@ -7,6 +7,7 @@ from app.models.consulting_model import ConsultingRequestModel
 # ⭐ NEW IMPORTS
 from app.services.rate_limit import rate_limit
 from app.services.usage_logger import log_usage
+from app.services.email_service import send_email   # <-- Gmail SMTP sender
 
 router = APIRouter(prefix="/consulting", tags=["Consulting"])
 
@@ -40,9 +41,37 @@ def save_request_to_db(payload: ConsultingRequest):
 
 
 def notify_selemani(payload: ConsultingRequest):
-    print("CONSULTING REQUEST RECEIVED:")
-    print(payload.dict())
-    # Render-safe: no SMTP
+    # ⭐ ADMIN EMAIL (to you)
+    admin_body = (
+        f"New consulting request received.\n\n"
+        f"Name: {payload.name}\n"
+        f"Email: {payload.email}\n"
+        f"Organization: {payload.organization}\n"
+        f"API Key: {payload.api_key}\n"
+        f"Project Description:\n{payload.project_description}\n\n"
+        f"Requested Services: {', '.join(payload.services)}"
+    )
+
+    send_email(
+        email_to="selemaniseif12@yahoo.com",
+        subject="New Consulting Request",
+        body=admin_body
+    )
+
+    # ⭐ USER CONFIRMATION EMAIL
+    user_body = (
+        f"Hello {payload.name},\n\n"
+        f"Thank you for your consulting request.\n"
+        f"We have received your project details and will contact you soon.\n\n"
+        f"Your submitted services: {', '.join(payload.services)}\n\n"
+        f"Best regards,\nAI Biosensing Team"
+    )
+
+    send_email(
+        email_to=payload.email,
+        subject="Your Consulting Request Has Been Received",
+        body=user_body
+    )
 
 
 @router.post("")
@@ -62,8 +91,6 @@ def submit_consulting_request(payload: ConsultingRequest, token: str):
         endpoint="consulting_submit",
         details=f"Consulting request from {payload.email}"
     )
-
-    print("Received consulting request:", payload.dict())
 
     save_request_to_db(payload)
     notify_selemani(payload)

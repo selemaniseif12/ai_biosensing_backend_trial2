@@ -194,10 +194,3 @@ def team_calendar(team_id: int, year: int, month: int, token: str = "", db: Sess
         day = schedule.scheduled_time.day
         calendar_data.setdefault(day, []).append(schedule_to_dict(schedule))
 
-    return {
-        "team_id": team_id,
-        "team_name": team.name,
-        "year": year,
-        "month": month,
-        "days": calendar_data
-    }

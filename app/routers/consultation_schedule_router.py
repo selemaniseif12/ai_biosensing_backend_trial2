@@ -10,6 +10,7 @@ from app.models.consultation_schedule import ConsultationSchedule
 # ⭐ NEW IMPORTS
 from app.services.rate_limit import rate_limit
 from app.services.usage_logger import log_usage
+from app.services.email_service import send_email   # <-- Gmail SMTP sender
 
 router = APIRouter(prefix="/consultations", tags=["Consultation Scheduling"])
 
@@ -74,15 +75,38 @@ def schedule_consultation(
     db.commit()
     db.refresh(schedule)
 
-    # Render-safe: No SMTP email sending
-    print("Meeting scheduled:", {
-        "consultation_id": consultation_id,
-        "user_email": getattr(consultation, "user_email", None),
-        "meeting_link": meeting_link,
-        "date": scheduled_time.date().isoformat(),
-        "time": scheduled_time.strftime("%H:%M"),
-        "topic": consultation.topic
-    })
+    # ⭐ EMAIL NOTIFICATIONS (Gmail SMTP)
+    user_email = getattr(consultation, "user_email", None)
+
+    if user_email:
+        send_email(
+            email_to=user_email,
+            subject="Your Consultation Has Been Scheduled",
+            body=(
+                f"Hello,\n\n"
+                f"Your consultation has been scheduled.\n\n"
+                f"Topic: {consultation.topic}\n"
+                f"Date: {scheduled_time.date().isoformat()}\n"
+                f"Time: {scheduled_time.strftime('%H:%M')}\n"
+                f"Meeting Link: {meeting_link}\n\n"
+                f"Thank you."
+            )
+        )
+
+    # ⭐ ADMIN NOTIFICATION (you)
+    send_email(
+        email_to="selemaniseif12@yahoo.com",
+        subject="New Consultation Scheduled",
+        body=(
+            f"A new consultation has been scheduled.\n\n"
+            f"Consultation ID: {consultation_id}\n"
+            f"User Email: {user_email}\n"
+            f"Topic: {consultation.topic}\n"
+            f"Date: {scheduled_time.date().isoformat()}\n"
+            f"Time: {scheduled_time.strftime('%H:%M')}\n"
+            f"Meeting Link: {meeting_link}\n"
+        )
+    )
 
     return schedule_to_dict(schedule, consultation)
 
