@@ -1,23 +1,36 @@
 import os
-import smtplib
-from email.mime.text import MIMEText
+import requests
+
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+SENDGRID_URL = "https://api.sendgrid.com/v3/mail/send"
+
 
 def send_email(to_email: str, subject: str, body: str):
-    smtp_server = "smtp.gmail.com"
-    smtp_port = 587
+    if not SENDGRID_API_KEY:
+        raise Exception("SENDGRID_API_KEY is missing from environment variables.")
 
-    sender_email = os.getenv("EMAIL_USER")
-    sender_password = os.getenv("EMAIL_PASS")
+    payload = {
+        "personalizations": [
+            {
+                "to": [{"email": to_email}],
+                "subject": subject
+            }
+        ],
+        "from": {"email": "noreply@ai-biosensing.com"},
+        "content": [
+            {
+                "type": "text/plain",
+                "value": body
+            }
+        ]
+    }
 
-    if not sender_email or not sender_password:
-        raise Exception("Email credentials not found in environment variables.")
+    headers = {
+        "Authorization": f"Bearer {SENDGRID_API_KEY}",
+        "Content-Type": "application/json"
+    }
 
-    msg = MIMEText(body)
-    msg["Subject"] = subject
-    msg["From"] = sender_email
-    msg["To"] = to_email
+    response = requests.post(SENDGRID_URL, json=payload, headers=headers)
 
-    with smtplib.SMTP(smtp_server, smtp_port) as server:
-        server.starttls()
-        server.login(sender_email, sender_password)
-        server.sendmail(sender_email, to_email, msg.as_string())
+    if response.status_code >= 400:
+        raise Exception(f"SendGrid error: {response.status_code} - {response.text}")
