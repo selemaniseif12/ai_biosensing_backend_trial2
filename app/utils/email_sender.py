@@ -16,7 +16,7 @@ def send_email(to_email: str, subject: str, body: str):
                 "subject": subject
             }
         ],
-        "from": {"email": "noreply@ai-biosensing.com"},
+        "from": {"email": "selemaniseif12@yahoo.com"},  # ⭐ VERIFIED SENDER
         "content": [
             {
                 "type": "text/plain",
