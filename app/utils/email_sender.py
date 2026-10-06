@@ -16,7 +16,7 @@ def send_email(to_email: str, subject: str, body: str):
                 "subject": subject
             }
         ],
-        "from": {"email": "selemaniseif12@yahoo.com"},  # ⭐ VERIFIED SENDER
+        "from": {"email": "selemaniseif1974@gmail.com"},  # ⭐ VERIFIED SENDER
         "content": [
             {
                 "type": "text/plain",
