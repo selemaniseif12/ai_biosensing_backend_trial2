@@ -1,3 +1,4 @@
+import os
 import smtplib
 from email.mime.text import MIMEText
 
@@ -5,8 +6,11 @@ def send_email(to_email: str, subject: str, body: str):
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
 
-    sender_email = "selemaniseif1974@gmail.com"
-    sender_password = "fgzpiqpsftuzmtdm"  # Gmail requires an App Password
+    sender_email = os.getenv("EMAIL_USER")
+    sender_password = os.getenv("EMAIL_PASS")
+
+    if not sender_email or not sender_password:
+        raise Exception("Email credentials not found in environment variables.")
 
     msg = MIMEText(body)
     msg["Subject"] = subject
