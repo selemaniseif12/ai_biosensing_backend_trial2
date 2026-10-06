@@ -4,10 +4,11 @@ from sqlalchemy.orm import Session
 from app.database import SessionLocal
 from app.models.consulting_model import ConsultingRequestModel
 
-# ⭐ NEW IMPORTS
-# from app.services.rate_limit import rate_limit      # ❌ COMMENTED OUT
-# from app.services.usage_logger import log_usage     # ❌ COMMENTED OUT
-from app.utils.email_sender import send_email         # <-- CORRECT Gmail SMTP sender
+# ⭐ RATE LIMIT & LOGGER REMOVED
+# from app.services.rate_limit import rate_limit
+# from app.services.usage_logger import log_usage
+
+from app.utils.email_sender import send_email   # <-- Correct Gmail SMTP sender
 
 router = APIRouter(prefix="/consulting", tags=["Consulting"])
 
@@ -53,7 +54,7 @@ def notify_selemani(payload: ConsultingRequest):
     )
 
     send_email(
-        email_to="selemaniseif12@yahoo.com",
+        to_email="selemaniseif12@yahoo.com",   # FIXED
         subject="New Consulting Request",
         body=admin_body
     )
@@ -68,7 +69,7 @@ def notify_selemani(payload: ConsultingRequest):
     )
 
     send_email(
-        email_to=payload.email,
+        to_email=payload.email,               # FIXED
         subject="Your Consulting Request Has Been Received",
         body=user_body
     )
