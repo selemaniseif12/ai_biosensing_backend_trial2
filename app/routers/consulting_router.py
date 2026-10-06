@@ -7,7 +7,7 @@ from app.models.consulting_model import ConsultingRequestModel
 # ⭐ NEW IMPORTS
 from app.services.rate_limit import rate_limit
 from app.services.usage_logger import log_usage
-from app.services.email_service import send_email   # <-- Gmail SMTP sender
+from app.utils.email_sender import send_email   # <-- CORRECT Gmail SMTP sender
 
 router = APIRouter(prefix="/consulting", tags=["Consulting"])
 
