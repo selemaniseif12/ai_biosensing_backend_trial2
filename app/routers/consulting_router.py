@@ -75,19 +75,19 @@ def notify_selemani(payload: ConsultingRequest):
 
 
 @router.post("")
-def submit_consulting_request(payload: ConsultingRequest, token: str):
+def submit_consulting_request(payload: ConsultingRequest):
     """
     Submit a consulting request.
     - Rate-limited
     - Usage logged
     """
 
-    # ⭐ RATE LIMITING
-    rate_limit(token, endpoint="consulting_submit")
+    # ⭐ RATE LIMITING (token removed, safe default)
+    rate_limit("public", endpoint="consulting_submit")
 
     # ⭐ USAGE LOGGING
     log_usage(
-        token=token,
+        token="public",
         endpoint="consulting_submit",
         details=f"Consulting request from {payload.email}"
     )
