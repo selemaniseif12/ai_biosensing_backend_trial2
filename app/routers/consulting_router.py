@@ -5,9 +5,9 @@ from app.database import SessionLocal
 from app.models.consulting_model import ConsultingRequestModel
 
 # ⭐ NEW IMPORTS
-from app.services.rate_limit import rate_limit
-from app.services.usage_logger import log_usage
-from app.utils.email_sender import send_email   # <-- CORRECT Gmail SMTP sender
+# from app.services.rate_limit import rate_limit      # ❌ COMMENTED OUT
+# from app.services.usage_logger import log_usage     # ❌ COMMENTED OUT
+from app.utils.email_sender import send_email         # <-- CORRECT Gmail SMTP sender
 
 router = APIRouter(prefix="/consulting", tags=["Consulting"])
 
@@ -78,19 +78,19 @@ def notify_selemani(payload: ConsultingRequest):
 def submit_consulting_request(payload: ConsultingRequest):
     """
     Submit a consulting request.
-    - Rate-limited
-    - Usage logged
+    - Rate limiting disabled
+    - Usage logging disabled
     """
 
-    # ⭐ RATE LIMITING (token removed, safe default)
-    rate_limit("public", endpoint="consulting_submit")
+    # ⭐ RATE LIMITING DISABLED
+    # rate_limit("public", endpoint="consulting_submit")
 
-    # ⭐ USAGE LOGGING
-    log_usage(
-        token="public",
-        endpoint="consulting_submit",
-        details=f"Consulting request from {payload.email}"
-    )
+    # ⭐ USAGE LOGGING DISABLED
+    # log_usage(
+    #     token="public",
+    #     endpoint="consulting_submit",
+    #     details=f"Consulting request from {payload.email}"
+    # )
 
     save_request_to_db(payload)
     notify_selemani(payload)
