@@ -58,6 +58,7 @@ from app.routers.consultation_schedule_router import router as consultation_sche
 
 # Token admin (ACTIVE)
 from app.routers.token_admin import router as token_admin_router
+from app.routers.admin_system_router import router as admin_system_router
 
 # Receipts (ACTIVE)
 from app.routers.receipts_router import init_receipts
@@ -145,6 +146,7 @@ app.include_router(consulting_router)
 
 # Admin
 app.include_router(token_admin_router)
+app.include_router(admin_system_router)
 app.include_router(consultation_schedule_router)
 
 # Virus List

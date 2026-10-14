@@ -22,7 +22,7 @@ if not STRIPE_SECRET_KEY:
     raise RuntimeError("STRIPE_SECRET_KEY is not set in environment.")
 
 stripe.api_key = STRIPE_SECRET_KEY
-print("Stripe key loaded:", stripe.api_key)
+# Stripe initialized without logging the secret.
 
 router = APIRouter(prefix="/payments", tags=["Payments"])
 
