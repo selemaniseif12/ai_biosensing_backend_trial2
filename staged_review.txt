@@ -1,0 +1,450 @@
+﻿diff --git a/.gitignore b/.gitignore
+index a5ae03c..703674a 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,6 +1,67 @@
++# ==========================================
++# Machine Learning Models and Generated Data
++# ==========================================
+ app/ml/models/
+-venv/
+ *.pkl
+-*.dll
+ *.joblib
+ *.npy
++*.dll
++
++# ==========================================
++# Python Virtual Environments
++# ==========================================
++venv/
++.venv/
++env/
++
++# ==========================================
++# Environment Variables and Secrets
++# ==========================================
++.env
++.env.*
++!.env.example
++.env.backup
++
++# ==========================================
++# Python Cache and Compiled Files
++# ==========================================
++__pycache__/
++*.py[cod]
++*$py.class
++
++# ==========================================
++# Test and Type-Checking Cache
++# ==========================================
++.pytest_cache/
++.mypy_cache/
++.ruff_cache/
++.coverage
++htmlcov/
++
++# ==========================================
++# IDE and Editor Files
++# ==========================================
++.vscode/
++.idea/
++*.swp
++*.swo
++*~
++
++# ==========================================
++# Operating System Files
++# ==========================================
++.DS_Store
++Thumbs.db
++Desktop.ini
++
++# ==========================================
++# Temporary Backups
++# ==========================================
++*.bak
++*.old
++*.tmp
++
++# ==========================================
++# Logs
++# ==========================================
++*.log
+\ No newline at end of file
+diff --git a/app/config.py b/app/config.py
+index 50b1e22..fc5c2c4 100644
+--- a/app/config.py
++++ b/app/config.py
+@@ -1,30 +1,32 @@
+ from functools import lru_cache
+-from pydantic_settings import BaseSettings
++from pydantic_settings import BaseSettings, SettingsConfigDict
++
+ 
+ class Settings(BaseSettings):
++    model_config = SettingsConfigDict(
++    env_file=".env",
++    extra="ignore",
++    case_sensitive=True,
++)
++
+     ENV: str = "local"
+     PROJECT_NAME: str = "QCM AI Biosensing API"
+ 
+-    # Database (internal DB settings)
+     DB_HOST: str = "127.0.0.1"
+     DB_PORT: int = 5432
+     DB_USER: str = "qcm_user"
+     DB_PASSWORD: str = "qcm_password"
+     DB_NAME: str = "qcm_biosensing"
+ 
+-    # Security
+     JWT_SECRET_KEY: str = "CHANGE_ME_IN_PRODUCTION"
+     JWT_ALGORITHM: str = "HS256"
+     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
+ 
+-    # API keys
+     ROOT_ADMIN_API_KEY: str = "CHANGE_ME_ADMIN_KEY"
+ 
+-    # ML
+     MODEL_DIR: str = "models"
+     DEFAULT_MODEL_NAME: str = "qcm_rf_model.pkl"
+ 
+-    # External services (must match your .env)
+     AZURE_CLIENT_ID: str | None = None
+     AZURE_CLIENT_SECRET: str | None = None
+     AZURE_TENANT_ID: str | None = None
+@@ -32,22 +34,13 @@ class Settings(BaseSettings):
+     STRIPE_SECRET_KEY: str | None = None
+     STRIPE_WEBHOOK_SECRET: str | None = None
+ 
+-    DATABASE_URL: str | None = None
+-
+-    # Γ¡É ML model URLs (required to stop ValidationError)
++    # ML model URLs
+     VIRUS_CLASSIFIER_URL: str | None = None
+     VIRUS_MULTICLASS_V7_URL: str | None = None
+     SPECTRAL_MODEL_URL: str | None = None
+     RF_MODEL_URL: str | None = None
+     SCALER_URL: str | None = None
+ 
+-    # Γ¡É Pydantic v2 configuration (replaces old Config class)
+-    model_config = {
+-        "extra": "ignore",
+-        "env_file": ".env",
+-        "case_sensitive": True
+-    }
+-
+ 
+ @lru_cache
+ def get_settings() -> Settings:
+@@ -56,6 +49,7 @@ def get_settings() -> Settings:
+ 
+ settings = get_settings()
+ 
++
+ # Stripe price IDs
+ STRIPE_PRICE_IDS = {
+     "consulting_fixed": "price_1U2bYWBBErGCNvV44HTOR5ml",
+@@ -68,5 +62,5 @@ STRIPE_PRICE_IDS = {
+     "model_access_v6": "price_1U2bwmBBErGCNvV4Y5sqt3Yp",
+     "bundle_v2_v6": "price_1U2c3cBBErGCNvV4H8x8MCON",
+     "virus_db_sub": "price_1U2c60BBErGCNvV4sTQrLZRb",
+-    "device_low_grade": "price_1U2cBABBErGCNvV4bRRgpzkX"
++    "device_low_grade": "price_1U2cBABBErGCNvV4bRRgpzkX",
+ }
+diff --git a/app/main.py b/app/main.py
+index d3fae96..f65109b 100644
+--- a/app/main.py
++++ b/app/main.py
+@@ -58,6 +58,7 @@ from app.routers.consultation_schedule_router import router as consultation_sche
+ 
+ # Token admin (ACTIVE)
+ from app.routers.token_admin import router as token_admin_router
++from app.routers.admin_system_router import router as admin_system_router
+ 
+ # Receipts (ACTIVE)
+ from app.routers.receipts_router import init_receipts
+@@ -145,6 +146,7 @@ app.include_router(consulting_router)
+ 
+ # Admin
+ app.include_router(token_admin_router)
++app.include_router(admin_system_router)
+ app.include_router(consultation_schedule_router)
+ 
+ # Virus List
+diff --git a/app/routers/admin_system_router.py b/app/routers/admin_system_router.py
+index 9c8834a..6ce20f3 100644
+--- a/app/routers/admin_system_router.py
++++ b/app/routers/admin_system_router.py
+@@ -1,82 +1,93 @@
+-from fastapi import APIRouter, HTTPException
++from fastapi import APIRouter, Depends, HTTPException
+ from app.utils.admin_token import validate_admin_token
+ 
++
++def require_admin_system_token(token: str | None = None):
++    """Require a valid active admin_system token for every route."""
++    if not validate_admin_token(token):
++        raise HTTPException(
++            status_code=403,
++            detail="Admin token required: admin only",
++        )
++
++
+ router = APIRouter(
+     prefix="/admin-system",
+-    tags=["admin-system"]
++    tags=["admin-system"],
++    dependencies=[Depends(require_admin_system_token)],
+ )
+ 
+-# ---------------------------------------------------
+-# 1. OUTER GATE ΓÇö ONLY PLACE WHERE ADMIN TOKEN IS CHECKED
+-# ---------------------------------------------------
+ 
+ @router.get("/")
+-def enter_admin_system(token: str):
+-    """
+-    Admin token unlocks the entire Admin & System area.
+-    Everything inside becomes open.
+-    """
+-    if not validate_admin_token(token):
+-        raise HTTPException(status_code=403, detail="Admin token required: admin only")
++def enter_admin_system():
+     return {"access": "granted", "message": "Welcome to Admin & System"}
+ 
+ 
+-# ---------------------------------------------------
+-# 2. INSIDE ADMIN & SYSTEM ΓÇö ALL DASHBOARDS ARE OPEN
+-# ---------------------------------------------------
+-
+ @router.get("/student")
+ def admin_student_dashboard():
+     return {"dashboard": "student", "status": "open"}
+ 
++
+ @router.get("/admin")
+ def admin_admin_dashboard():
+     return {"dashboard": "admin", "status": "open"}
+ 
++
+ @router.get("/public")
+ def admin_public_dashboard():
+     return {"dashboard": "public", "status": "open"}
+ 
++
+ @router.get("/admin-tokens")
+ def admin_tokens_dashboard():
+     return {"dashboard": "admin-tokens", "status": "open"}
+ 
++
+ @router.get("/store")
+ def admin_store_dashboard():
+     return {"dashboard": "store", "status": "open"}
+ 
++
+ @router.get("/cart")
+ def admin_cart_dashboard():
+     return {"dashboard": "cart", "status": "open"}
+ 
++
+ @router.get("/checkout")
+ def admin_checkout_dashboard():
+     return {"dashboard": "checkout", "status": "open"}
+ 
++
+ @router.get("/course-content")
+ def admin_course_content():
+     return {"dashboard": "course-content", "status": "open"}
+ 
++
+ @router.get("/course-dashboard")
+ def admin_course_dashboard():
+     return {"dashboard": "course-dashboard", "status": "open"}
+ 
++
+ @router.get("/government-admin-viewer")
+ def admin_government_viewer():
+     return {"dashboard": "government-admin-viewer", "status": "open"}
+ 
++
+ @router.get("/consulting-history")
+ def admin_consulting_history():
+     return {"dashboard": "consulting-history", "status": "open"}
+ 
++
+ @router.get("/consulting-meetings")
+ def admin_consulting_meetings():
+     return {"dashboard": "consulting-meetings", "status": "open"}
+ 
++
+ @router.get("/consulting-access")
+ def admin_consulting_access():
+     return {"dashboard": "consulting-access", "status": "open"}
+ 
++
+ @router.get("/payment-history")
+ def admin_payment_history():
+     return {"dashboard": "payment-history", "status": "open"}
+diff --git a/app/routers/payments_router.py b/app/routers/payments_router.py
+index fb5b531..205014b 100644
+--- a/app/routers/payments_router.py
++++ b/app/routers/payments_router.py
+@@ -22,7 +22,7 @@ if not STRIPE_SECRET_KEY:
+     raise RuntimeError("STRIPE_SECRET_KEY is not set in environment.")
+ 
+ stripe.api_key = STRIPE_SECRET_KEY
+-print("Stripe key loaded:", stripe.api_key)
++# Stripe initialized without logging the secret.
+ 
+ router = APIRouter(prefix="/payments", tags=["Payments"])
+ 
+diff --git a/app/routers/token_admin.py b/app/routers/token_admin.py
+index d97c933..eae3de8 100644
+--- a/app/routers/token_admin.py
++++ b/app/routers/token_admin.py
+@@ -1,11 +1,36 @@
+-from fastapi import APIRouter, Depends, HTTPException
++∩╗┐import hmac
++
++from fastapi import APIRouter, Depends, Header, HTTPException
+ from sqlalchemy.orm import Session
+ 
++from app.config import settings
+ from app.database import get_db
+ from app.models.token_model import TokenModel
+ 
+ 
+-router = APIRouter(prefix="/admin/tokens", tags=["Admin Token Control"])
++def require_root_admin_key(
++    x_root_admin_key: str | None = Header(default=None, alias="X-Root-Admin-Key"),
++):
++    """Reject requests unless a valid root admin key is configured and supplied."""
++    configured_key = settings.ROOT_ADMIN_API_KEY
++
++    if (
++        not configured_key
++        or configured_key == "CHANGE_ME_ADMIN_KEY"
++        or not x_root_admin_key
++        or not hmac.compare_digest(x_root_admin_key, configured_key)
++    ):
++        raise HTTPException(
++            status_code=403,
++            detail="Root admin authorization required",
++        )
++
++
++router = APIRouter(
++    prefix="/admin/tokens",
++    tags=["Admin Token Control"],
++    dependencies=[Depends(require_root_admin_key)],
++)
+ 
+ 
+ @router.get("/list")
+@@ -16,19 +41,23 @@ def list_tokens(db: Session = Depends(get_db)):
+ 
+ 
+ @router.post("/create")
+-def create_token(service_name: str, user_id: int | None = None, db: Session = Depends(get_db)):
++def create_token(
++    service_name: str,
++    user_id: int | None = None,
++    db: Session = Depends(get_db),
++):
+     """Manually create a new token."""
+     token_obj = TokenModel.create_token(
+         db=db,
+         token_type=service_name,
+         user_id=user_id,
+-        description=f"Admin-created token for {service_name}"
++        description=f"Admin-created token for {service_name}",
+     )
+     return {
+         "status": "created",
+         "token": token_obj.token,
+         "service": service_name,
+-        "user_id": user_id
++        "user_id": user_id,
+     }
+ 
+ 
+@@ -61,19 +90,30 @@ def activate_token(token: str, db: Session = Depends(get_db)):
+ 
+ 
+ @router.post("/extend/{token}")
+-def extend_token_expiration(token: str, days: int = 30, db: Session = Depends(get_db)):
++def extend_token_expiration(
++    token: str,
++    days: int = 30,
++    db: Session = Depends(get_db),
++):
+     """Extend token expiration."""
++    if days < 1 or days > 365:
++        raise HTTPException(
++            status_code=400,
++            detail="Days must be between 1 and 365",
++        )
++
+     token_obj = db.query(TokenModel).filter(TokenModel.token == token).first()
+ 
+     if not token_obj:
+         raise HTTPException(status_code=404, detail="Token not found")
+ 
+     from datetime import datetime, timedelta
++
+     token_obj.expires_at = datetime.utcnow() + timedelta(days=days)
+     db.commit()
+ 
+     return {
+         "status": "extended",
+         "token": token,
+-        "new_expiration": token_obj.expires_at
++        "new_expiration": token_obj.expires_at,
+     }
+diff --git a/app/utils/admin_token.py b/app/utils/admin_token.py
+new file mode 100644
+index 0000000..33e49e6
+--- /dev/null
++++ b/app/utils/admin_token.py
+@@ -0,0 +1,37 @@
++∩╗┐from sqlalchemy.orm import Session
++
++from app.database import SessionLocal
++from app.models.token_model import TokenModel
++
++
++def validate_admin_token(token: str) -> bool:
++    if not token or not isinstance(token, str):
++        return False
++
++    db: Session = SessionLocal()
++    try:
++        record = (
++            db.query(TokenModel)
++            .filter(
++                TokenModel.token == token,
++                TokenModel.token_type == "admin_system",
++                TokenModel.is_active.is_(True),
++            )
++            .first()
++        )
++
++        if record is None:
++            return False
++
++        if record.expires_at is not None:
++            from datetime import datetime
++
++            expiry = record.expires_at
++            now = datetime.now(expiry.tzinfo) if expiry.tzinfo else datetime.utcnow()
++
++            if expiry <= now:
++                return False
++
++        return True
++    finally:
++        db.close()
