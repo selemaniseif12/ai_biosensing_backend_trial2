@@ -6,10 +6,15 @@ import json
 import redis
 
 REDIS_URL = os.getenv("REDIS_URL")
-if not REDIS_URL:
-    raise RuntimeError("REDIS_URL is not set in environment")
 
-redis_client = redis.Redis.from_url(REDIS_URL, decode_responses=True)
+# Redis is optional
+redis_client = None
+
+if REDIS_URL:
+    redis_client = redis.Redis.from_url(
+        REDIS_URL,
+        decode_responses=True
+    )
 
 USAGE_LOG_KEY = "usage:logs"
 
@@ -21,6 +26,10 @@ def log_usage(token: str, endpoint: str, details: str = ""):
     - Can be inspected later for analytics
     """
 
+    # If Redis is unavailable, skip logging
+    if redis_client is None:
+        return
+
     entry = {
         "timestamp": time.time(),
         "token": token,
@@ -29,4 +38,7 @@ def log_usage(token: str, endpoint: str, details: str = ""):
     }
 
     # Push to Redis list (most recent at head)
-    redis_client.lpush(USAGE_LOG_KEY, json.dumps(entry))
+    redis_client.lpush(
+        USAGE_LOG_KEY,
+        json.dumps(entry)
+    )
