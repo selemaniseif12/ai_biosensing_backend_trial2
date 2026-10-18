@@ -12,6 +12,7 @@ router = APIRouter(
     tags=["Government"]
 )
 
+
 class GovernmentContact(BaseModel):
     organization: str
     department: str | None = None
@@ -82,6 +83,7 @@ Piezo-Pico to Femtotechnology Sensors Inc.
         subject=user_subject,
         plain_text_content=user_body
     )
+
     sg.send(message_user)
 
 
@@ -135,6 +137,33 @@ def get_all_government_messages():
     except Exception as e:
         print("🔥 GOVERNMENT FETCH ERROR:", e)
         return {"success": False, "data": [], "error": str(e)}
+
+    finally:
+        db.close()
+
+
+@router.delete("/delete-all")
+def delete_all_government_messages():
+    db = SessionLocal()
+
+    try:
+        deleted_count = db.query(GovernmentMessage).delete()
+        db.commit()
+
+        return {
+            "success": True,
+            "deleted": deleted_count,
+            "message": "All government messages deleted successfully"
+        }
+
+    except Exception as e:
+        print("🔥 GOVERNMENT DELETE ERROR:", e)
+        db.rollback()
+
+        return {
+            "success": False,
+            "error": str(e)
+        }
 
     finally:
         db.close()
