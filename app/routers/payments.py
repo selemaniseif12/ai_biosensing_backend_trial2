@@ -31,7 +31,6 @@ async def create_checkout_session(item_id: str):
     try:
         session = stripe.checkout.Session.create(
             mode="payment",
-            payment_method_types=["card"],
             line_items=[{"price": STRIPE_PRICE_IDS[item_id], "quantity": 1}],
             metadata={"item_id": item_id},
             success_url="https://yourdomain.com/success?session_id={CHECKOUT_SESSION_ID}",
