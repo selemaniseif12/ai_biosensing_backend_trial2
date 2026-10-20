@@ -1,42 +1,34 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, HTTPException
 
-from app.database import get_db
-from app.models.cart_item import CartItem
-
-router = APIRouter(prefix="/checkout", tags=["Checkout"])
+router = APIRouter(
+    prefix="/checkout",
+    tags=["Checkout"],
+)
 
 
 @router.post("")
-def process_checkout(user_id: int, db: Session = Depends(get_db)):
-    cart_items = db.query(CartItem).filter(CartItem.user_id == user_id).all()
+def process_checkout():
+    """
+    Legacy checkout endpoint.
 
-    if not cart_items:
-        raise HTTPException(status_code=404, detail="Cart is empty")
+    This endpoint previously reported a successful payment without
+    collecting or verifying payment.
 
-    # Calculate total cost
-    total = sum(item.price_usd * item.quantity for item in cart_items)
-    payment_status = "success"
+    Customers must now use the Stripe Checkout endpoint instead.
+    This endpoint intentionally does not mark orders as paid,
+    issue receipts, or modify cart contents.
+    """
 
-    # Save items BEFORE any action
-    items_data = [
-        {
-            "item_id": item.item_id,
-            "name": item.item_name,
-            "quantity": item.quantity,
-            "price_usd": item.price_usd
-        }
-        for item in cart_items
-    ]
-
-    # ⭐ IMPORTANT:
-    # Do NOT delete cart items here.
-    # This prevents accidental wiping of the cart table
-    # and avoids 500 errors on repeated checkout calls.
-
-    return {
-        "message": "Payment processed successfully",
-        "status": payment_status,
-        "total": total,
-        "items": items_data
-    }
+    raise HTTPException(
+        status_code=410,
+        detail={
+            "message": (
+                "This legacy checkout endpoint is disabled. "
+                "Start payment through the Stripe Checkout endpoint."
+            ),
+            "payment_endpoint": (
+                "/store/stripe/checkout?user_id=<authenticated_user_id>"
+            ),
+            "payment_status": "not_processed",
+        },
+    )
