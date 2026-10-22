@@ -95,7 +95,7 @@ def schedule_consultation(
 
     # ⭐ ADMIN NOTIFICATION (you)
     send_email(
-        email_to="selemaniseif12@yahoo.com",
+        email_to="selemaniseif1974@gmail.com",
         subject="New Consultation Scheduled",
         body=(
             f"A new consultation has been scheduled.\n\n"

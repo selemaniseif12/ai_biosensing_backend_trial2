@@ -54,7 +54,7 @@ def notify_selemani(payload: ConsultingRequest):
     )
 
     send_email(
-        to_email="selemaniseif12@yahoo.com",   # FIXED
+        to_email="selemaniseif1974@gmail.com",   # FIXED
         subject="New Consulting Request",
         body=admin_body
     )
